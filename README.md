@@ -71,6 +71,7 @@ python scripts/validate_experiment.py experiments/runs
 ```
 
 自动采集、持续运行、停止和导入命令见
+[《DriveTDPA 自动实验运行手册》](docs/automated_experiment_guide_zh.md)，实验文件说明见
 [`experiments/README.md`](experiments/README.md)。
 
 正式清单填写真实 HTTPS 下载地址后，可按场景下载并自动验证 SHA256：

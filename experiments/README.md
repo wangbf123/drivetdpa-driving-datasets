@@ -11,6 +11,9 @@ loader。
 CARLA bag 种子提取、真实模型健康检查、多 seed rollout、安全门控、真实 VLM judge、
 TPO loader 审计、manifest 生成、导入、Git commit 和 push：
 
+完整的模型启动、单轮和持续运行、状态检查、停止、恢复及故障判断命令见
+[《DriveTDPA 自动实验运行手册》](../docs/automated_experiment_guide_zh.md)。
+
 ```bash
 cd /mnt/workspace/autonomous_driving
 SEED_BASE=91000 \
@@ -19,20 +22,28 @@ PUSH_RESULTS=1 \
 bash scripts/experiments/run_carla_data_experiment.sh
 ```
 
-持续采集默认每 30 分钟运行一轮，并递增 seed：
+持续采集示例在每轮完成后等待 30 秒，并递增 seed：
 
 ```bash
-nohup env \
-  INTERVAL_SECONDS=1800 \
+cd /mnt/workspace/autonomous_driving
+setsid -f env \
+  INTERVAL_SECONDS=30 \
   MAX_RUNS=0 \
+  START_SEED=96000 \
+  SEED_STRIDE=1000 \
   PUBLISH_RESULTS=1 \
   PUSH_RESULTS=1 \
-  bash /mnt/workspace/autonomous_driving/scripts/experiments/run_continuous_carla_data.sh \
-  >/mnt/workspace/drivetdpa_experiments/continuous.stdout.log 2>&1 &
-echo $! >/mnt/workspace/drivetdpa_experiments/continuous.pid
+  bash scripts/experiments/run_continuous_carla_data.sh \
+  >/mnt/workspace/drivetdpa_experiments/continuous.stdout.log 2>&1
+
+sleep 2
+pgrep -f '^bash scripts/experiments/run_continuous_carla_data.sh$' \
+  | tail -n 1 \
+  >/mnt/workspace/drivetdpa_experiments/continuous.pid
 ```
 
-创建 `/mnt/workspace/drivetdpa_experiments/STOP` 后，runner 会在当前轮结束时停止。
+创建 `/mnt/workspace/drivetdpa_experiments/STOP` 后，runner 会在当前轮结束时停止；完整
+的立即停止命令见运行手册。
 完整 rosbag 和模型权重只保留在采集服务器，不由该流程提交到 Git。
 每轮数据通过后会先完成本地导入和 commit，再单独尝试 push。GitHub 凭据暂时不可用时
 记录 `PUSH_BLOCKED` 并在下一轮重试，不会中止数据采集或把实验本身误标成失败。
