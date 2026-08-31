@@ -1,8 +1,12 @@
-# Storage and Release
+# 数据存储与发布规范
 
-GitHub stores schemas, manifests, examples, release notes, metric tables, plots and tools. Do not commit bags, full image sequences, point clouds, videos, maps, checkpoints, credentials or private endpoints.
+## GitHub 保存的内容
 
-Use immutable object-storage prefixes and separate raw, derived and report artifacts:
+GitHub 用于保存 Schema、manifest、小型示例、发布说明、指标表、图表和复现工具。不要提交 rosbag、完整图像序列、点云、视频、地图、模型权重、密钥和私有地址。
+
+## 对象存储保存的内容
+
+大文件使用不可变版本前缀，并将原始数据、派生数据和报告分开：
 
 ```text
 dataset-carla-v0.1/
@@ -12,4 +16,4 @@ dataset-carla-v0.1/
   checksums.sha256
 ```
 
-Publish HTTPS URLs or documented `oss://` keys, never expiring signed URLs or URLs containing credentials. Every artifact records byte size, SHA256, media type, scene ID and relative path. Corrections receive a new version rather than silent replacement.
+公开发布应使用稳定的 HTTPS 地址或明确记录的 `oss://` 对象路径，不能使用会过期的签名 URL，也不能在 URL 中包含凭据。每个文件记录字节数、SHA256、媒体类型、场景 ID 和相对路径。数据修正后发布新版本，禁止悄悄覆盖已经发布的对象。

@@ -1,3 +1,3 @@
-# CARLA Closed-Loop Dataset
+# CARLA 闭环数据集
 
-Reserved for `dataset-carla-closed-loop-v0.1`. Episodes link prediction and control at frame `t` to simulator state, route progress, collisions, lane invasions and comfort at later frames. Release status: **planned**.
+为 `dataset-carla-closed-loop-v0.1` 预留。每个片段将 `t` 帧的预测和控制关联到后续帧的仿真器状态、路线进度、碰撞、压线和舒适性。当前状态：**计划中**。

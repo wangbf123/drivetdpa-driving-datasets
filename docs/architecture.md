@@ -1,24 +1,24 @@
-# Architecture
+# 系统架构
 
-The dataset is organized around CARLA scenes and timestamped frames. A scene is one reproducible episode with a CARLA town, route, weather, traffic seed, sensor suite, Autoware configuration and model versions.
+数据以 CARLA 场景和带时间戳的帧为核心组织。一个场景代表一次可复现实验，包含 CARLA Town、路线、天气、交通随机种子、传感器配置、Autoware 配置和模型版本。
 
-## Identity and synchronization
+## 数据标识与同步
 
-- `scene_id` identifies an episode.
-- `frame_id` identifies a CARLA simulation frame.
-- `timestamp_ns` is the ROS/simulation timestamp in nanoseconds.
-- Every BEV, description, prediction, preference decision and control result retains these identifiers.
-- Control at frame `t` links to ego state, events and route progress at frame `t+1`.
+- `scene_id`：标识一次完整 CARLA 实验。
+- `frame_id`：CARLA 仿真帧编号。
+- `timestamp_ns`：ROS/仿真时间戳，单位为纳秒。
+- 动态 BEV、Talk2BEV、DriveTDPA、偏好选择和控制结果都必须保留这些标识。
+- `t` 帧的控制指令必须关联到 `t+1` 帧的车辆状态、事件和路线进度。
 
-## Processing layers
+## 处理层次
 
-1. CARLA produces sensor observations and authoritative simulator state.
-2. CARLA ROS Bridge publishes synchronized ROS 2 messages.
-3. Autoware provides localization, perception, map, route, planning and control state.
-4. Dynamic BEV converts the scene into ego-centric structured context.
-5. Talk2BEV produces auditable scene facts and a textual description.
-6. DriveTDPA predicts reasoning, a 3-step action and a 3-second trajectory with 6 points.
-7. The preference selector compares candidates from the same input and selects a valid trajectory.
-8. Autoware/CARLA execute control and produce the next-frame outcome.
+1. CARLA 产生传感器观测和权威仿真状态。
+2. CARLA ROS Bridge 发布同步的 ROS 2 消息。
+3. Autoware 提供定位、感知、地图、路由、规划和控制状态。
+4. 动态 BEV 将场景转换为自车坐标系下的结构化上下文。
+5. Talk2BEV 输出可审计的场景事实和自然语言描述。
+6. DriveTDPA 输出推理、3 步动作和包含 6 个点的 3 秒轨迹。
+7. preference selector 比较同一输入的多个候选并选出安全有效的轨迹。
+8. Autoware/CARLA 执行控制，产生下一帧状态和闭环结果。
 
-Raw references and compact derived records are retained so every result is traceable to its CARLA frame.
+仓库同时保存原始大文件引用和精简派生记录，使每个预测结果都能追溯到对应的 CARLA 帧。

@@ -1,9 +1,9 @@
-# Experiment Reports
+# 实验报告
 
-Store small, reviewable release artifacts here:
+该目录只保存体积较小、方便审查的发布结果：
 
-- `latest.md`: current experimental status and known limitations.
-- `metrics/*.json`: machine-readable metrics such as collision rate, ADE, FDE, and latency.
-- `figures/*.png`: selected BEV, trajectory, and comparison images.
+- `latest.md`：最新实验状态和已知限制。
+- `metrics/*.json`：碰撞率、ADE、FDE、延迟等机器可读指标。
+- `figures/*.png`：精选 BEV、轨迹和对比图。
 
-Full run logs, videos and raw data belong in object storage and should be linked from an immutable CARLA release manifest. Do not turn example values into claimed measurements; reports must identify the dataset, code, model and CARLA scenario versions used.
+完整运行日志、视频和原始数据放在对象存储，并从不可变的 CARLA manifest 链接。示例数值不能当作正式测量结果；每份报告必须说明使用的数据集、代码、模型和 CARLA 场景版本。

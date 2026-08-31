@@ -1,25 +1,25 @@
-# CARLA Data Collection Protocol
+# CARLA 数据采集流程
 
-## Before capture
+## 采集前
 
-Record CARLA version, town, map hash, route, weather, traffic density, random seeds, synchronous fixed delta, sensor calibration, ROS distro, Autoware commit, DriveTDPA checkpoint and preference-selector configuration.
+记录 CARLA 版本、Town、地图哈希、路线、天气、交通密度、随机种子、同步步长、传感器标定、ROS 版本、Autoware commit、DriveTDPA checkpoint 和偏好选择配置。
 
-## During capture
+## 采集过程中
 
-1. Run CARLA in synchronous mode and retain `/clock`.
-2. Record required ROS topics in one rosbag2 per scene or bounded segment.
-3. Export one compact record using the CARLA frame number as `frame_id`.
-4. Retain sensor references, dynamic BEV, Talk2BEV output, all DriveTDPA candidates, selector decision, published trajectory and control.
-5. Record next-frame state, route progress, collision/lane-invasion events and timing.
+1. CARLA 使用同步模式运行，并保留 `/clock`。
+2. 每个场景或限定片段录制一份 rosbag2。
+3. 使用 CARLA 帧编号作为 `frame_id`，导出精简帧记录。
+4. 保留传感器引用、动态 BEV、Talk2BEV 输出、所有 DriveTDPA 候选、选择结果、发布轨迹和控制指令。
+5. 记录下一帧状态、路线进度、碰撞、压线事件和各阶段耗时。
 
-## After capture
+## 采集后
 
-1. Close the bag cleanly and record duration and message counts.
-2. Generate SHA256 for every artifact before upload.
-3. Validate manifests and records with `scripts/validate_dataset.py`.
-4. Upload large artifacts to object storage without embedded credentials.
-5. Publish manifests, reports, figures and compact examples to GitHub.
+1. 正常关闭 rosbag，记录持续时间和消息数量。
+2. 上传前为每个文件生成 SHA256。
+3. 使用 `scripts/validate_dataset.py` 校验 manifest 和 JSON 数据。
+4. 将大文件上传到对象存储，URL 中不得包含密钥。
+5. GitHub 只发布 manifest、报告、图表和小型示例。
 
-## Coverage and splitting
+## 场景覆盖与数据划分
 
-Use multiple towns/routes, weather and lighting, varied traffic density, static obstacles, lead-vehicle braking, lane changes and intersections. Separate train, validation and test by scene, not frame, to prevent temporal leakage.
+数据应覆盖多个 Town 和路线、不同天气和光照、不同交通密度、静态障碍、前车制动、变道和路口场景。训练集、验证集和测试集必须按场景划分，不能把同一连续场景的相邻帧分到不同集合，以免发生时序数据泄漏。

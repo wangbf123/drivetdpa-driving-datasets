@@ -1,10 +1,10 @@
-# Contributing Data
+# 数据贡献说明
 
-1. Use CARLA-derived data and preserve scene/frame provenance.
-2. Validate JSON and manifests before submitting.
-3. Keep raw and large artifacts in object storage.
-4. Include software/model versions, scenario parameters and SHA256.
-5. Exclude credentials, signed private URLs, personal data and internal paths.
-6. Clearly distinguish examples, predictions and ground truth.
+1. 只提交来源明确的 CARLA 数据，并保留 `scene_id`、`frame_id` 和时间戳。
+2. 提交前使用仓库工具验证 JSON、JSONL 和 manifest。
+3. rosbag、图像序列、点云、视频和权重等大文件放在对象存储。
+4. 记录 CARLA 场景参数、软件版本、模型版本、文件大小和 SHA256。
+5. 禁止提交密钥、带签名的私有 URL、个人隐私数据和服务器内部路径。
+6. 明确区分格式示例、模型预测和 Ground Truth。
 
-Pull requests should state the dataset version, scenes added, storage location, validation command and report changes.
+Pull Request 应说明数据集版本、新增场景、对象存储位置、验证命令以及实验报告变化。

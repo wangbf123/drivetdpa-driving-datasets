@@ -1,5 +1,5 @@
-# Latest Experiment Report
+# 最新实验报告
 
-Status: **no measured CARLA release published yet**.
+当前状态：**尚未公开正式测量的 CARLA 数据版本**。
 
-When a run is released, report dataset and code versions, CARLA scenarios, number of scenes/frames, route completion, collisions, lane invasions, trajectory ADE/FDE, comfort, parse success, selector win/safety rates and end-to-end latency. Include confidence intervals and links to immutable manifests.
+正式发布实验后，本文件应记录数据集和代码版本、CARLA 场景、场景和帧数量、路线完成率、碰撞和压线次数、轨迹 ADE/FDE、舒适性、解析成功率、偏好选择安全率以及端到端延迟，并给出置信区间和不可变 manifest 链接。

@@ -1,3 +1,3 @@
-# CARLA Preference Dataset
+# CARLA 偏好对数据集
 
-Reserved for `dataset-carla-preference-v0.1`. Every candidate group shares one CARLA scene/frame input. Records retain candidates, parse results, rewards, ranks, advantages, safety validity and chosen/rejected provenance. Release status: **planned**.
+为 `dataset-carla-preference-v0.1` 预留。每个候选组共享同一个 CARLA 场景和帧输入，保留候选、解析结果、奖励、排名、advantage、安全有效性以及 chosen/rejected 来源。当前状态：**计划中**。

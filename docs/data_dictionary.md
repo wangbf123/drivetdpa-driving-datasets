@@ -1,27 +1,27 @@
-# Data Dictionary
+# 数据字典
 
-## Common identifiers
+## 公共标识字段
 
-| Field | Meaning |
+| 字段 | 含义 |
 | --- | --- |
-| `dataset_version` | Immutable release identifier |
-| `scene_id` | One CARLA episode |
-| `frame_id` | CARLA frame number as a string |
-| `timestamp_ns` | ROS/simulation time in nanoseconds |
-| `source` | Always `carla` for official records |
+| `dataset_version` | 不可变的数据集发布版本 |
+| `scene_id` | 一次 CARLA 场景实验 |
+| `frame_id` | CARLA 仿真帧编号 |
+| `timestamp_ns` | ROS/仿真纳秒时间戳 |
+| `source` | 正式数据固定为 `carla` |
 
-## Dynamic BEV
+## 动态 BEV
 
-Coordinates are ego-centric: x right-positive, y forward-positive, meters. Objects include class, relative position, distance, speed, lane relation and risk. Occupancy metadata includes frame, resolution, dimensions and occupied-cell count. Risk labels include `front_close`, `front_nearby`, `behind_close`, `nearby` and `low`.
+坐标系以自车为中心，x 轴向右为正，y 轴向前为正，单位为米。目标字段包含类别、相对位置、距离、速度、车道关系和风险等级。占用栅格包含坐标系、分辨率、宽高和占用单元数量。当前风险值包括 `front_close`、`front_nearby`、`behind_close`、`nearby` 和 `low`。
 
-## DriveTDPA prediction
+## DriveTDPA 预测
 
-Input links images, mission goal, Talk2BEV/BEV context and ego state. Output retains reasoning, 3 action steps, exactly 6 finite trajectory points over 3 seconds, `parse_ok` and latency. It is a prediction, not ground truth.
+输入关联相机路径、任务目标、Talk2BEV/BEV 场景上下文和自车状态。输出保留推理文本、3 个动作步骤、3 秒内恰好 6 个有限数值轨迹点、`parse_ok` 和模型延迟。该结果属于模型预测，不是 Ground Truth。
 
-## Preference pair
+## 偏好对
 
-Candidates come from repeated rollouts for the same CARLA frame. Auditable fields include prediction, parse status, reward components, total, rank and advantage. A pair stores chosen/rejected IDs, rewards, ranks, advantages and margin. Safety validation precedes selection.
+候选来自同一个 CARLA 帧的多次 rollout。可审计字段包括预测内容、解析状态、奖励分量、总奖励、排名和 advantage。偏好对记录 chosen/rejected ID、奖励、排名、advantage 和差值。任何候选必须先通过安全检查才能被选中。
 
-## Closed-loop outcome
+## 闭环结果
 
-Control at frame `t` links to speed/pose, route progress, collision, lane invasion and tracking error at `t+1`. Reports aggregate route completion, collision rate, comfort, latency and trajectory quality.
+`t` 帧控制指令关联到 `t+1` 帧的车辆速度、位置、路线进度、碰撞、压线和轨迹跟踪误差。场景报告汇总路线完成率、碰撞率、舒适性、延迟和轨迹质量。
