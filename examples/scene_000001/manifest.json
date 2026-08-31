@@ -1,0 +1,25 @@
+{
+  "dataset_version": "dataset-carla-v0.1",
+  "scene_id": "scene_000001",
+  "source": "carla",
+  "status": "example_only",
+  "duration_sec": 120,
+  "modalities": [
+    "camera",
+    "lidar",
+    "ego_state",
+    "dynamic_bev",
+    "talk2bev",
+    "drivetdpa",
+    "preference",
+    "autoware_control"
+  ],
+  "artifacts": [
+    {
+      "kind": "rosbag2",
+      "uri": "REPLACE_WITH_RELEASE_URL",
+      "bytes": 0,
+      "sha256": "REPLACE_WITH_SHA256"
+    }
+  ]
+}

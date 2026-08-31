@@ -1,0 +1,29 @@
+{
+  "dataset_version": "dataset-carla-v0.1",
+  "scene_id": "scene_000001",
+  "source": "carla",
+  "timestamp_ns": 1722470400123456789,
+  "ego_state": {
+    "position_m": { "x": 125.4, "y": 38.2, "z": 0.3 },
+    "yaw_rad": 1.57,
+    "speed_mps": 8.6
+  },
+  "sensors": {
+    "front_camera": "sensors/camera_front/000123.jpg",
+    "lidar": "sensors/lidar/000123.bin"
+  },
+  "talk2bev": {
+    "facts": "scene_context/000123.json",
+    "description": "The ego vehicle is in the right lane. A vehicle is about 25 m ahead and the traffic light is red."
+  },
+  "drivetdpa": {
+    "parse_ok": true,
+    "action": "slow_down_and_stop",
+    "trajectory": "drivetdpa/prediction_000123.json",
+    "latency_ms": 85
+  },
+  "closed_loop": {
+    "control": { "steering_rad": 0.03, "throttle": 0.0, "brake": 0.18 },
+    "next_ego_state": "ego_state/000124.json"
+  }
+}

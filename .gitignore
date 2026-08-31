@@ -1,0 +1,36 @@
+# Large generated artifacts belong in object storage, not Git.
+data/
+artifacts/
+downloads/
+*.bag
+*.db3
+*.mcap
+*.pcd
+*.bin
+*.las
+*.laz
+*.mp4
+*.avi
+*.mkv
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.tar
+*.tar.gz
+*.tar.zst
+
+# Secrets and local configuration.
+.env
+.env.*
+*.key
+*.pem
+*secret*
+*credential*
+.ossutilconfig
+
+# Local tooling.
+__pycache__/
+.pytest_cache/
+.DS_Store
+Thumbs.db
