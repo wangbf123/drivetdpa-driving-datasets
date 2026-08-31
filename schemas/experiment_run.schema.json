@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DriveTDPA Automated Experiment Run",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "dataset_version",
+    "run_id",
+    "source",
+    "created_at",
+    "status",
+    "checks",
+    "metrics",
+    "scope",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {"const": "drivetdpa.automated_experiment_run.v1"},
+    "dataset_version": {"const": "dataset-carla-preference-experiment-v0.1"},
+    "run_id": {"type": "string", "minLength": 1},
+    "source": {"const": "carla"},
+    "created_at": {"type": "string"},
+    "status": {"enum": ["PASS", "BLOCKED"]},
+    "checks": {"type": "object"},
+    "metrics": {"type": "object"},
+    "scope": {"type": "object"},
+    "artifacts": {"type": "object"}
+  },
+  "additionalProperties": true
+}

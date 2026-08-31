@@ -2,7 +2,7 @@
 
 本仓库是 DriveTDPA 项目的公开数据门户，用于组织和展示 CARLA 自动驾驶实验产生的数据。它将仿真传感器、Autoware 状态、动态 BEV、Talk2BEV 场景描述、DriveTDPA 轨迹预测、偏好选择、控制指令和下一帧反馈串联成可以追踪、验证和复现实验的场景记录。
 
-> 当前状态：**数据规范与示例版本**。`examples/` 中的数据只用于说明格式，不代表正式实验结果，也不能视为 Ground Truth。完整 CARLA 实验数据将在采集后上传至对象存储，并通过本仓库发布索引、校验和与实验报告。
+> 当前状态：**数据规范、格式示例和自动实验预发布数据**。`examples/` 仍只用于说明格式；`experiments/runs/` 保存已经过真实模型、真实 judge、loader 和 SHA256 校验的小型 CARLA recorded-seed 实验包。它们不是完整实时闭环数据集，也不能视为 Ground Truth。
 
 ## 项目完整链路
 
@@ -43,6 +43,7 @@ CARLA 相机 / LiDAR / GNSS / IMU / 车辆状态
 | `dataset-carla-v0.1` | CARLA、Autoware、BEV、Talk2BEV 和 DriveTDPA 多模态帧 | 计划中 |
 | `dataset-carla-preference-v0.1` | CARLA 场景候选轨迹组和偏好对 | 计划中 |
 | `dataset-carla-closed-loop-v0.1` | 控制指令到下一帧反馈的闭环片段和指标 | 计划中 |
+| `dataset-carla-preference-experiment-v0.1` | 已录制 CARLA 种子上的真实模型多采样和偏好选择 | 自动持续采集中 |
 
 “计划中”表示已经预留数据规范和发布位置，不表示完整数据已经采集或通过验证。
 
@@ -55,6 +56,7 @@ manifests/            场景及大文件的机器可读索引
 schemas/              用于自动校验的 JSON Schema
 examples/             小型 CARLA 格式示例场景
 reports/              实验汇总、指标和图表
+experiments/          自动实验 run、机器可读索引和逐文件校验和
 scripts/              数据校验、校验和与安全下载工具
 ```
 
@@ -65,7 +67,11 @@ scripts/              数据校验、校验和与安全下载工具
 ```bash
 python scripts/validate_dataset.py examples/scene_000001/manifest.json
 python scripts/generate_checksums.py examples/scene_000001
+python scripts/validate_experiment.py experiments/runs
 ```
+
+自动采集、持续运行、停止和导入命令见
+[`experiments/README.md`](experiments/README.md)。
 
 正式清单填写真实 HTTPS 下载地址后，可按场景下载并自动验证 SHA256：
 
