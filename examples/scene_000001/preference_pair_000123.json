@@ -1,0 +1,6 @@
+{
+  "scene_id":"scene_000001","frame_id":"000123","candidate_group_id":"group_000123_01",
+  "candidates":[{"candidate_id":"candidate_a","predict":"prediction_000123.json","parse":{"parse_ok":true},"reward":{"total":0.82,"dynamic_bev_safe_reward":0.91,"dynamic_bev_risk":"low"},"rank":1,"advantage":0.17},{"candidate_id":"candidate_b","predict":"predictions/candidate_b.json","parse":{"parse_ok":true},"reward":{"total":0.48,"dynamic_bev_safe_reward":0.52,"dynamic_bev_risk":"front_nearby"},"rank":2,"advantage":-0.17}],
+  "chosen":"candidate_a","rejected":"candidate_b",
+  "selection":{"chosen_reward":0.82,"rejected_reward":0.48,"reward_margin":0.34,"chosen_rank":1,"rejected_rank":2,"chosen_advantage":0.17,"rejected_advantage":-0.17,"group_reward_mean":0.65,"group_reward_std":0.17,"best_reward":0.82,"worst_reward":0.48,"safety_validated":true,"judge_hidden_fields":["reward","rank","ground_truth","chosen","rejected"]}
+}

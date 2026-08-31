@@ -1,0 +1,1 @@
+{"status":"example_only","scene_id":"scene_000001","frames":1,"route_completion":null,"collision_count":null,"lane_invasion_count":null,"trajectory_ade_m":null,"trajectory_fde_m":null,"mean_latency_ms":null,"note":"Reserved metric structure; null values are not measured results."}

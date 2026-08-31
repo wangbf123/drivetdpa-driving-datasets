@@ -1,0 +1,5 @@
+{
+  "scene_id":"scene_000001","frame_id":"000123",
+  "input":{"image_paths":["camera/000123.jpg"],"mission_goal":"FORWARD","scene_context":"Vehicle 25 m ahead in ego lane; intersection approaching.","ego_state":{"x":125.4,"y":38.2,"yaw":1.57}},
+  "output":{"reasoning":"Maintain lane and reduce speed smoothly for the lead vehicle.","action_steps":["hold lane","reduce acceleration","maintain safe gap"],"trajectory":[{"t_sec":0.5,"x_right_m":0.0,"y_forward_m":4.1,"speed_mps":8.0},{"t_sec":1.0,"x_right_m":0.0,"y_forward_m":7.9,"speed_mps":7.4},{"t_sec":1.5,"x_right_m":0.0,"y_forward_m":11.4,"speed_mps":6.8},{"t_sec":2.0,"x_right_m":0.0,"y_forward_m":14.6,"speed_mps":6.2},{"t_sec":2.5,"x_right_m":0.0,"y_forward_m":17.5,"speed_mps":5.6},{"t_sec":3.0,"x_right_m":0.0,"y_forward_m":20.1,"speed_mps":5.0}],"parse_ok":true,"latency_ms":85.0,"is_ground_truth":false}
+}

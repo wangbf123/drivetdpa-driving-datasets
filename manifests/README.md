@@ -1,12 +1,7 @@
-# Dataset manifests
+# Dataset Manifests
 
-One JSON object is stored per line. A release manifest lists the scene metadata and every artifact needed to retrieve or reproduce that scene.
+Each JSONL line indexes one CARLA scene or one scene-level release artifact. All official entries use `source: "carla"` and a version beginning with `dataset-carla`.
 
-Required fields:
+Required index fields are `dataset_version`, `scene_id`, `source`, `status`, artifact URI, byte size and SHA256. Scene manifests additionally retain CARLA scenario settings, software/model versions, ROS topics and connected record paths.
 
-```text
-dataset_version, scene_id, source, duration_sec, created_at,
-code_commit, model_version, config_version, artifacts
-```
-
-Each artifact must include `kind`, `uri`, `bytes`, and `sha256`. Use an HTTPS URL, OSS URI, or a documented dataset-platform URI. Never place credentials in a `uri`.
+The `*.example.jsonl` files deliberately contain placeholders. Replace them only after artifacts are uploaded and checksummed. Use credential-free HTTPS URLs or stable OSS object keys; never commit signed URLs, access keys or secrets.

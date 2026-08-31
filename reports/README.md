@@ -1,4 +1,4 @@
-# Reports
+# Experiment Reports
 
 Store small, reviewable release artifacts here:
 
@@ -6,4 +6,4 @@ Store small, reviewable release artifacts here:
 - `metrics/*.json`: machine-readable metrics such as collision rate, ADE, FDE, and latency.
 - `figures/*.png`: selected BEV, trajectory, and comparison images.
 
-Full run logs, videos, and raw data belong in object storage and should be linked from a manifest.
+Full run logs, videos and raw data belong in object storage and should be linked from an immutable CARLA release manifest. Do not turn example values into claimed measurements; reports must identify the dataset, code, model and CARLA scenario versions used.
