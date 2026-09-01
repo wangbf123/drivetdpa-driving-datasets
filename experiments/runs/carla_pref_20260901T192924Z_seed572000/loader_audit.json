@@ -1,0 +1,36 @@
+{
+  "annotation": "/mnt/workspace/drivetdpa_experiments/runs/carla_pref_20260901T192924Z_seed572000/preference_pairs.jsonl",
+  "annotation_sha256": "dbde6ce30dd0f1836e3c5dca5a53fa47b1628a26a2dc374d1aa337e473d90e03",
+  "checkpoint": "/mnt/workspace/autonomous_driving/internvl_chat_gpt_oss/work_dirs/smoke_dpo_single_a10_20260620_161511",
+  "checks": {
+    "chosen_nonempty": true,
+    "image_nonempty": true,
+    "records_present": true,
+    "rejected_nonempty": true,
+    "required_keys_present": true
+  },
+  "loader": "internvl.train.internvl_chat_tpo.LazySupervisedDataset",
+  "records": 1,
+  "schema_version": "drivetdpa.preference_loader_audit.v1",
+  "status": "PASS",
+  "tensor_shapes": {
+    "chosen_input_ids": [
+      105
+    ],
+    "image_flags": [
+      1
+    ],
+    "pixel_values": [
+      1,
+      3,
+      448,
+      448
+    ],
+    "prompt_input_ids": [
+      308
+    ],
+    "rejected_input_ids": [
+      105
+    ]
+  }
+}
