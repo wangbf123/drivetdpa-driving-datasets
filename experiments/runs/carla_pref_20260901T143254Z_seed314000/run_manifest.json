@@ -1,0 +1,100 @@
+{
+  "artifacts": {
+    "carla_front": {
+      "bytes": 109864,
+      "relative_path": "carla_front.png",
+      "sha256": "e09ef3c2c65149de4749f36c05eabf286b5c7ffb4a228eb81d9af57aae232059"
+    },
+    "loader_audit": {
+      "bytes": 935,
+      "relative_path": "loader_audit.json",
+      "sha256": "500747a67fcea5fa4f692bec7504dc6479a16bf0dddfe5dd0e78fb42fd16837f"
+    },
+    "model_health": {
+      "bytes": 272,
+      "relative_path": "model_health.json",
+      "sha256": "c019f9027247cb22ee74c69f9ec3f9bcd1612ead84bb5a9a6c4bebf7b43cc15a"
+    },
+    "preference_audit": {
+      "bytes": 6443,
+      "relative_path": "preference_audit.jsonl",
+      "sha256": "45bd10a6345a935e31259680cc7177e656d5ec81e0b0353d1803634e6bfbb7ff"
+    },
+    "preference_pairs": {
+      "bytes": 23136,
+      "relative_path": "preference_pairs.jsonl",
+      "sha256": "c952a1b417a91f9617fd0dbc29a08cbf3884ef702138a6d254eac95f50f6e44d"
+    },
+    "preference_stats": {
+      "bytes": 2135,
+      "relative_path": "preference_stats.json",
+      "sha256": "091c930f47c05855733317490193933a89a5a182df17a385a2faabf2c59a1caa"
+    },
+    "rollout_group": {
+      "bytes": 17078,
+      "relative_path": "rollout_group.jsonl",
+      "sha256": "6b8985219284af4e7e1f9457c070223c9006321fb2234526d57e538adc2c076b"
+    },
+    "scene_context": {
+      "bytes": 6188,
+      "relative_path": "scene_context.json",
+      "sha256": "d61405327c751b905da46e502bd25706125840d5883427f2c9531817d8f3198c"
+    },
+    "source_manifest": {
+      "bytes": 2146,
+      "relative_path": "source_manifest.json",
+      "sha256": "6e89290c3591680c6b7d943a76bf0e30faf708b2a4aea0f8e1845a02d3efb472"
+    }
+  },
+  "checks": {
+    "all_artifacts_present": true,
+    "carla_source_verified": true,
+    "loader_status_pass": true,
+    "no_fallback": true,
+    "official_talk2bev_not_overclaimed": true,
+    "preference_status_pass": true,
+    "real_judge_evidence": true,
+    "real_model_health": true
+  },
+  "created_at": "2026-09-01T14:33:28.482311+00:00",
+  "dataset_version": "dataset-carla-preference-experiment-v0.1",
+  "metrics": {
+    "accepted_candidates": 3,
+    "candidate_count": 4,
+    "eligible_samples": 1,
+    "fallback_samples": 0,
+    "judge_confidence": 0.8,
+    "judge_selected_samples": 1,
+    "mean_judge_latency_ms": 6024.573,
+    "preference_pairs": 2,
+    "scene_context_grounding_rate": 1.0,
+    "selected_candidate_id": "carla_pref_20260901T143254Z_seed314000-candidate-0001"
+  },
+  "missing_artifacts": [],
+  "model_identity": {
+    "backend": "DriveTDPAPredictor",
+    "config_file_size": 3314,
+    "mock": false,
+    "model_file_size": 2121876280,
+    "model_path": "/mnt/workspace/autonomous_driving/internvl_chat_gpt_oss/work_dirs/smoke_dpo_single_a10_20260620_161511"
+  },
+  "project_commit": "14aeae8b07b6262823590f1c35791af2f454a723",
+  "publication": {
+    "large_source_bag_published": false,
+    "note": "完整 rosbag 未提交 Git；源文件哈希保留在 source_manifest.json。",
+    "relative_run_path": "experiments/runs/carla_pref_20260901T143254Z_seed314000",
+    "repository": "https://github.com/wangbf123/drivetdpa-driving-datasets"
+  },
+  "run_id": "carla_pref_20260901T143254Z_seed314000",
+  "schema_version": "drivetdpa.automated_experiment_run.v1",
+  "scope": {
+    "carla_gpu_rendering": "BLOCKED_LAVAPIPE",
+    "carla_source_is_recorded_bag": true,
+    "live_vehicle_closed_loop_in_this_run": false,
+    "official_talk2bev_entrypoint": "BLOCKED_NOT_EXECUTED",
+    "talk2bev_compatible_lvlm": "PASS"
+  },
+  "seed_base": 314000,
+  "source": "carla",
+  "status": "PASS"
+}
