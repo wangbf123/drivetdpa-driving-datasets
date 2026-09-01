@@ -1,0 +1,1 @@
+{"ok": true, "mock": false, "model_identity": {"backend": "DriveTDPAPredictor", "mock": false, "model_path": "/mnt/workspace/autonomous_driving/internvl_chat_gpt_oss/work_dirs/smoke_dpo_single_a10_20260620_161511", "model_file_size": 2121876280, "config_file_size": 3314}}
