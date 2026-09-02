@@ -1,15 +1,15 @@
 # 最新自动实验报告
 
-更新时间：2026-09-02T04:06:55.455194+00:00
+更新时间：2026-09-02T04:07:58.903523+00:00
 
-最新 run：[`carla_pref_20260902T040626Z_seed1019000`](../experiments/runs/carla_pref_20260902T040626Z_seed1019000/run_manifest.json)
+最新 run：[`carla_pref_20260902T040729Z_seed1020000`](../experiments/runs/carla_pref_20260902T040729Z_seed1020000/run_manifest.json)
 
 ```text
 STATUS=PASS
 SOURCE=carla
 CANDIDATE_COUNT=4
 ACCEPTED_CANDIDATES=3
-PREFERENCE_PAIRS=2
+PREFERENCE_PAIRS=1
 FALLBACK_SAMPLES=0
 JUDGE_CONFIDENCE=0.95
 ```
@@ -18,5 +18,5 @@ JUDGE_CONFIDENCE=0.95
 安全门控、真实 VLM judge 和 TPO loader。它不是实时 CARLA 车辆闭环重跑。
 官方 Talk2BEV entrypoint 与 NVIDIA GPU 渲染状态仍按 manifest 保持 BLOCKED。
 
-当前共发布 900 个自动实验 run。机器可读索引见
+当前共发布 901 个自动实验 run。机器可读索引见
 [`experiments/index.jsonl`](../experiments/index.jsonl)。
