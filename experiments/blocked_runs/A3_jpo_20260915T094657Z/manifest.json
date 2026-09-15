@@ -1,0 +1,24 @@
+{
+  "run_id": "A3_jpo_20260915T094657Z",
+  "experiment": "A3_jpo",
+  "status": "BLOCKED",
+  "status_zh": "阻塞",
+  "source": "nuscenes-mini",
+  "created_at": 1789465617.0066621,
+  "dataset": {
+    "name": "nuscenes-mini",
+    "path": "/mnt/workspace/autonomous_driving/datasets/nuscenes",
+    "version": "v1.0-mini"
+  },
+  "model_checkpoint": null,
+  "git_commit": "14aeae8b07b6262823590f1c35791af2f454a723",
+  "seed": null,
+  "hardware": {
+    "platform": "Linux-5.10.134-18.0.11.lifsea8.x86_64-x86_64-with-glibc2.35",
+    "python": "3.12.13"
+  },
+  "blockers": [
+    "尚未获得该实验的真实可审计输出；此包只记录配置和证据缺口，不伪造 PASS"
+  ],
+  "artifacts": {}
+}
