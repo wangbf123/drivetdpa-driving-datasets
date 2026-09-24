@@ -1,0 +1,31 @@
+{
+  "experiment_id": "drivetdpa_abcd_nuscenes_oss_pilot_20260924",
+  "title_zh": "DriveTDPA A-D 消融实验",
+  "dataset": {
+    "source": "NuScenes OSS",
+    "train_rows": 450,
+    "train_scenes": 18,
+    "eval_rows": 20,
+    "eval_scenes": 1,
+    "split": "scene-disjoint pilot"
+  },
+  "artifacts": {
+    "raw_server_path": "/mnt/workspace/drivetdpa_experiments/abcd_complete_20260924/",
+    "real_model_inference": true,
+    "mock": false
+  },
+  "results": [
+    {"name":"A1_SFT","input_mode":"full","status":"PASS","sample_count":20,"ADE_m":1.5953015733,"FDE_m":2.7289023801,"Goal":0.9042494334,"parse_success_rate":1.0,"A_to_T_consistency":1.0,"scene_reference_rate":1.0,"Lat_ms_mean":13442.6916},
+    {"name":"A2_physics","input_mode":"full","status":"PASS","sample_count":20,"ADE_m":1.5972392678,"FDE_m":2.7343302600,"Goal":0.8993582954,"parse_success_rate":1.0,"A_to_T_consistency":1.0,"scene_reference_rate":1.0,"Lat_ms_mean":13213.3948},
+    {"name":"A3_jpo","input_mode":"full","status":"PASS","sample_count":20,"ADE_m":1.5995184962,"FDE_m":2.7401699032,"Goal":0.8932455602,"parse_success_rate":1.0,"A_to_T_consistency":1.0,"scene_reference_rate":1.0,"Lat_ms_mean":13375.5232},
+    {"name":"A4_vldpo","input_mode":"full","status":"PASS","sample_count":20,"ADE_m":1.5984447568,"FDE_m":2.7381811155,"Goal":0.9016363067,"parse_success_rate":1.0,"A_to_T_consistency":1.0,"scene_reference_rate":1.0,"Lat_ms_mean":13746.1326},
+    {"name":"B1_image_text","input_mode":"image_text","status":"PARTIAL","sample_count":20,"ADE_m":1.9918234824,"FDE_m":3.2952378444,"Goal":0.9382313282,"parse_success_rate":0.65,"A_to_T_consistency":1.0,"scene_reference_rate":0.4,"Lat_ms_mean":12675.5404},
+    {"name":"B2_image_speech","input_mode":"image_speech","status":"PARTIAL","sample_count":20,"ADE_m":1.5602545456,"FDE_m":2.8550515918,"Goal":0.9379368948,"parse_success_rate":0.6,"A_to_T_consistency":1.0,"scene_reference_rate":0.6,"Lat_ms_mean":13611.7957},
+    {"name":"B3_image_text_bev","input_mode":"full","status":"PASS","sample_count":20,"ADE_m":1.5984447568,"FDE_m":2.7381811155,"Goal":0.9016363067,"parse_success_rate":1.0,"A_to_T_consistency":1.0,"scene_reference_rate":1.0,"Lat_ms_mean":13433.1171},
+    {"name":"B4_image_speech_bev","input_mode":"full_speech","status":"PASS","sample_count":20,"ADE_m":1.5974058365,"FDE_m":2.7341318399,"Goal":0.8993490646,"parse_success_rate":1.0,"A_to_T_consistency":1.0,"scene_reference_rate":1.0,"Lat_ms_mean":13724.9301},
+    {"name":"C1_R_to_T","input_mode":"trajectory_only","status":"PASS","sample_count":20,"ADE_m":1.5969165575,"FDE_m":2.7350670176,"Goal":0.8987973332,"parse_success_rate":1.0,"A_to_T_consistency":1.0,"scene_reference_rate":1.0,"Lat_ms_mean":13146.6420},
+    {"name":"C2_R_to_A_to_T","input_mode":"full","status":"PASS","sample_count":20,"ADE_m":1.5984447568,"FDE_m":2.7381811155,"Goal":0.9016363067,"parse_success_rate":1.0,"A_to_T_consistency":1.0,"scene_reference_rate":1.0,"Lat_ms_mean":13660.5338},
+    {"name":"D1_no_talk2bev","input_mode":"no_bev","status":"PARTIAL","sample_count":20,"ADE_m":1.9918234824,"FDE_m":3.2952378444,"Goal":0.9382313282,"parse_success_rate":0.65,"A_to_T_consistency":1.0,"scene_reference_rate":0.4,"Lat_ms_mean":13136.4552},
+    {"name":"D2_talk2bev","input_mode":"full","status":"PASS","sample_count":20,"ADE_m":1.5984447568,"FDE_m":2.7381811155,"Goal":0.9016363067,"parse_success_rate":1.0,"A_to_T_consistency":1.0,"scene_reference_rate":1.0,"Lat_ms_mean":13899.7297}
+  ]
+}
