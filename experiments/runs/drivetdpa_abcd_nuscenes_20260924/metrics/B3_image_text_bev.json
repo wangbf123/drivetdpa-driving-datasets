@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "source": "real_model_inference",
+  "model_identity": {
+    "backend": "DriveTDPAPredictor",
+    "mock": false,
+    "model_path": "/mnt/workspace/drivetdpa_experiments/abcd_complete_20260924/A4_vldpo_tpo50",
+    "model_file_size": 2121876280,
+    "config_file_size": 3312
+  },
+  "sample_count": 20,
+  "metrics": {
+    "ADE_m": 1.5984447568170612,
+    "FDE_m": 2.738181115511569,
+    "Goal": 0.9016363066749503,
+    "A_to_T_consistency": 1.0,
+    "R_to_A_consistency": null,
+    "TMC": null,
+    "scene_reference_rate": 1.0,
+    "scene_reference_correct_rate": 1.0,
+    "parse_success_rate": 1.0,
+    "Lat_ms_mean": 13433.11711640199,
+    "Lat_ms_p95": 14656.688697999925,
+    "Unsup": null
+  },
+  "metric_notes": {
+    "Goal": "existing FORWARD reward function applied to predicted final waypoint",
+    "TMC": "provisional proxy equal to A-to-T action/trajectory consistency; R-to-A is only scored when think contains an explicit directional intent",
+    "Unsup": "not computed: no validated ground-truth support ontology for arbitrary generated claims",
+    "scene_reference": "category keyword grounding against annotated BEV object types; pilot heuristic, not human-reviewed"
+  },
+  "limits": [
+    "single OSS blob group",
+    "single scene pilot",
+    "held-out rows from that scene",
+    "not a final paper result"
+  ],
+  "predictions_jsonl": "predictions.jsonl",
+  "input_mode": "full"
+}

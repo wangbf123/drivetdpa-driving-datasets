@@ -1,0 +1,51 @@
+[DriveTDPA] loading tokenizer from /mnt/workspace/drivetdpa_experiments/abcd_complete_20260924/A4_vldpo_tpo50
+[transformers] You are using a model of type `internvl_chat` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.
+[transformers] The tokenizer you are loading from '/mnt/workspace/drivetdpa_experiments/abcd_complete_20260924/A4_vldpo_tpo50' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+[DriveTDPA] loading model from /mnt/workspace/drivetdpa_experiments/abcd_complete_20260924/A4_vldpo_tpo50
+Loading weights:   0%|          | 0/657 [00:00<?, ?it/s]Loading weights: 100%|██████████| 657/657 [00:00<00:00, 9460.38it/s]
+[DriveTDPA] ready device=cuda dtype=bf16 image_size=448
+[DriveTDPA] serving http://127.0.0.1:18111
+[DriveTDPA] POST /predict, GET /health
+[HTTP] 127.0.0.1 - "GET /health HTTP/1.1" 200 -
+[HTTP] 127.0.0.1 - "GET /health HTTP/1.1" 200 -
+[HTTP] 127.0.0.1 - "GET /health HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -
+[transformers] Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+[HTTP] 127.0.0.1 - "POST /predict HTTP/1.1" 200 -

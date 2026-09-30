@@ -1,0 +1,43 @@
+{
+  "schema_version": "drivetdpa.abcd.experiment_matrix.v1",
+  "run_id": "drivetdpa_abcd_nuscenes_20260924",
+  "source": "NuScenes trainval02-10 sequential SFT rows",
+  "train_rows": 450,
+  "train_scenes": 18,
+  "eval_rows": 20,
+  "eval_scenes": 1,
+  "groups": {
+    "A": {
+      "name_zh": "训练目标消融",
+      "configs": {
+        "A1_SFT": {"name_zh": "SFT 基线", "input_mode": "full", "output_protocol": "rat"},
+        "A2_physics": {"name_zh": "物理约束训练", "input_mode": "full", "output_protocol": "rat"},
+        "A3_jpo": {"name_zh": "JPO 偏好优化", "input_mode": "full", "output_protocol": "rat"},
+        "A4_vldpo": {"name_zh": "VL-DPO 偏好优化", "input_mode": "full", "output_protocol": "rat"}
+      }
+    },
+    "B": {
+      "name_zh": "输入模态消融",
+      "configs": {
+        "B1_image_text": {"name_zh": "图像 + 文本", "input_mode": "text_only", "output_protocol": "rat"},
+        "B2_image_speech": {"name_zh": "图像 + 语音转写", "input_mode": "speech_text", "output_protocol": "rat"},
+        "B3_image_text_bev": {"name_zh": "图像 + 文本 + BEV", "input_mode": "full", "output_protocol": "rat"},
+        "B4_image_speech_bev": {"name_zh": "图像 + 语音转写 + BEV", "input_mode": "full", "output_protocol": "rat"}
+      }
+    },
+    "C": {
+      "name_zh": "推理路径消融",
+      "configs": {
+        "C1_R_to_T": {"name_zh": "表征到轨迹", "input_mode": "full", "output_protocol": "trajectory_only"},
+        "C2_R_to_A_to_T": {"name_zh": "表征到动作到轨迹", "input_mode": "full", "output_protocol": "rat"}
+      }
+    },
+    "D": {
+      "name_zh": "Talk2BEV 消融",
+      "configs": {
+        "D1_no_talk2bev": {"name_zh": "不使用 Talk2BEV", "input_mode": "no_bev", "output_protocol": "rat"},
+        "D2_talk2bev": {"name_zh": "使用 Talk2BEV", "input_mode": "full", "output_protocol": "rat"}
+      }
+    }
+  }
+}

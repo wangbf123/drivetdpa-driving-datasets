@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "source": "real_model_inference",
+  "model_identity": {
+    "backend": "DriveTDPAPredictor",
+    "mock": false,
+    "model_path": "/mnt/workspace/drivetdpa_experiments/oss_auto_train/trainval10_n50_s50_20260923/train",
+    "model_file_size": 2121876280,
+    "config_file_size": 3312
+  },
+  "sample_count": 20,
+  "metrics": {
+    "ADE_m": 1.5953015733112812,
+    "FDE_m": 2.7289023801039494,
+    "Goal": 0.9042494334052992,
+    "A_to_T_consistency": 1.0,
+    "R_to_A_consistency": null,
+    "TMC": null,
+    "scene_reference_rate": 1.0,
+    "scene_reference_correct_rate": 1.0,
+    "parse_success_rate": 1.0,
+    "Lat_ms_mean": 13442.691619700054,
+    "Lat_ms_p95": 14631.295511004282,
+    "Unsup": null
+  },
+  "metric_notes": {
+    "Goal": "existing FORWARD reward function applied to predicted final waypoint",
+    "TMC": "provisional proxy equal to A-to-T action/trajectory consistency; R-to-A is only scored when think contains an explicit directional intent",
+    "Unsup": "not computed: no validated ground-truth support ontology for arbitrary generated claims",
+    "scene_reference": "category keyword grounding against annotated BEV object types; pilot heuristic, not human-reviewed"
+  },
+  "limits": [
+    "single OSS blob group",
+    "single scene pilot",
+    "held-out rows from that scene",
+    "not a final paper result"
+  ],
+  "predictions_jsonl": "predictions.jsonl",
+  "input_mode": "full"
+}
