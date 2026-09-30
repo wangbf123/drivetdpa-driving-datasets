@@ -1,0 +1,20 @@
+{
+  "report_name": "DriveTDPA A-D 开环实验",
+  "guide_path": "/mnt/workspace/TEMP-FILE-STATION/DriveTDPA 实验指导.docx",
+  "experiment_root": "/mnt/workspace/drivetdpa_experiments/abcd_complete_20260924",
+  "dataset": {"source": "NuScenes OSS", "train_rows": 450, "train_scenes": 18, "eval_rows": 20},
+  "results": [
+    {"config":"A1_SFT","ADE_m":1.5953,"FDE_m":2.7289,"Goal":0.9042,"Consistency":1.0,"parse_rate":1.0,"scene_reference_rate":1.0,"Lat_ms":13442.7},
+    {"config":"A2_physics","ADE_m":1.5972,"FDE_m":2.7343,"Goal":0.8994,"Consistency":1.0,"parse_rate":1.0,"scene_reference_rate":1.0,"Lat_ms":13213.4},
+    {"config":"A3_jpo","ADE_m":1.5995,"FDE_m":2.7402,"Goal":0.8932,"Consistency":1.0,"parse_rate":1.0,"scene_reference_rate":1.0,"Lat_ms":13375.5},
+    {"config":"A4_vldpo","ADE_m":1.5984,"FDE_m":2.7382,"Goal":0.9016,"Consistency":1.0,"parse_rate":1.0,"scene_reference_rate":1.0,"Lat_ms":13746.1},
+    {"config":"B1_image_text","ADE_m":1.9918,"FDE_m":3.2952,"Goal":0.9382,"Consistency":1.0,"TMC":1.0,"parse_rate":0.65,"scene_reference_rate":0.4,"Lat_ms":12675.5},
+    {"config":"B2_image_speech","ADE_m":1.5603,"FDE_m":2.8551,"Goal":0.9379,"Consistency":1.0,"TMC":1.0,"parse_rate":0.6,"scene_reference_rate":0.6,"Lat_ms":13611.8},
+    {"config":"B3_image_text_bev","ADE_m":1.5984,"FDE_m":2.7382,"Goal":0.9016,"Consistency":1.0,"parse_rate":1.0,"scene_reference_rate":1.0,"Lat_ms":13433.1},
+    {"config":"B4_image_speech_bev","ADE_m":1.5974,"FDE_m":2.7341,"Goal":0.8993,"Consistency":1.0,"parse_rate":1.0,"scene_reference_rate":1.0,"Lat_ms":13724.9},
+    {"config":"C1_R_to_T","ADE_m":1.5969,"FDE_m":2.7351,"Goal":0.8988,"Consistency":1.0,"parse_rate":1.0,"scene_reference_rate":1.0,"Lat_ms":13146.6},
+    {"config":"C2_R_to_A_to_T","ADE_m":1.5984,"FDE_m":2.7382,"Goal":0.9016,"Consistency":1.0,"parse_rate":1.0,"scene_reference_rate":1.0,"Lat_ms":13660.5},
+    {"config":"D1_no_talk2bev","ADE_m":1.9918,"FDE_m":3.2952,"Goal":0.9382,"Consistency":1.0,"parse_rate":0.65,"scene_reference_rate":0.4,"Lat_ms":13136.5},
+    {"config":"D2_talk2bev","ADE_m":1.5984,"FDE_m":2.7382,"Goal":0.9016,"Consistency":1.0,"parse_rate":1.0,"scene_reference_rate":1.0,"Lat_ms":13899.7}
+  ]
+}
