@@ -1,13 +1,13 @@
 # A–D 开环实验分析报告（NuScenes 全量，最终版）
 
-这是 `drivetdpa_abcd_nuscenes_20260930` 的**权威、论文级分析报告**，覆盖 A1–A4（偏好消融）、B1–B4（模态消融）、C1–C2（动作层消融）、D1–D2（Talk2BEV 消融）。相较 2026-09-30 早期版本（`reports/abcd_按实验指导_20260930/`），本版经过**深度数据挖掘 + 三次自我修正**，是可支撑论文结论的定稿。
+这是 `drivetdpa_abcd_nuscenes_20260930` 的**权威、论文级分析报告**，覆盖 A1–A4（偏好消融）、B1–B4（模态消融）、C1–C2（动作层消融）、D1–D2（Talk2BEV 消融）。相较 2026-09-30 早期版本（`reports/abcd_按实验指导_20260930/`），本版经过**深度数据挖掘 + 三次自我修正 + 结构深化**，是可支撑论文结论的定稿。
 
 ## 文件
 
 | 文件 | 内容 |
 |---|---|
-| [`ANALYSIS_REPORT.md`](./ANALYSIS_REPORT.md) | **主报告**（中文，236 行）：摘要、行为塌缩三层证据、ADE 误差归因、机制、A/B/C/D 消融、条件、局限、可支撑主张、后续建议、附录 |
-| [`analysis_findings.json`](./analysis_findings.json) | 机器可读结论（17 个字段）：动作构成、塌缩、横向/纵向位移、误差归因、think 复述、场景感知检验、独立验证等 |
+| [`ANALYSIS_REPORT.md`](./ANALYSIS_REPORT.md) | **主报告**（中文，14 节 + 4 附录）：实验依据与目的、指标中文说明、行为塌缩三层证据、ADE 误差归因、机制、A/B/C/D 逐组深挖（实验问题/训练 loss/数据对比/机制/对论文价值）、条件、局限、可支撑主张、论文结构建议、优选配置、后续建议 |
+| [`analysis_findings.json`](./analysis_findings.json) | 机器可读结论（20 个字段）：动作构成、塌缩、位移、误差归因、think 复述、场景感知检验、独立验证、**训练 loss、延迟、消融增量** |
 | [`results_summary.json`](./results_summary.json) | 12 配置汇总统计（mean±std / 95% t 区间 / 条件分解 / 配对检验） |
 | [`ABCD_DATA_ANALYSIS.md`](./ABCD_DATA_ANALYSIS.md) | pipeline 自动生成的原始汇总报告 |
 
