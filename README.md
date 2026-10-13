@@ -27,8 +27,8 @@
 
 | 入口 | 说明 |
 |---|---|
-| [📄 主报告](reports/abcd_full_20260930/ANALYSIS_REPORT.md) | 论文级分析（行为塌缩三层证据、误差归因、场景感知统计、三次修正） |
-| [📊 机器可读结论](reports/abcd_full_20260930/analysis_findings.json) | 17 个结构化字段，可直接引用 |
+| [📄 主报告](reports/abcd_final/ANALYSIS_REPORT.md) | 论文级分析（行为塌缩三层证据、误差归因、场景感知统计、三次修正） |
+| [📊 机器可读结论](reports/abcd_final/analysis_findings.json) | 17 个结构化字段，可直接引用 |
 | [📦 原始 run 数据](experiments/runs/drivetdpa_abcd_nuscenes_20260930/) | 20 份 metrics + predictions + held-out 集 + SHA256 |
 | [📖 中文说明](docs/nuscenes_abcd_experiment_zh.md) | 面向中文读者的完整解读 |
 | [🔧 复现脚本](scripts/experiments/abcd_full/) | 数据切分 → 训练 → 评估 → 报告，可断点续跑 |

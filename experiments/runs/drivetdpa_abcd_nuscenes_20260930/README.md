@@ -6,7 +6,7 @@
 
 ## 一句话结论
 
-模型学会了 RAT 协议的**格式**与"前进"意图（parse≈1.0、Goal≈0.9、A→T=1.0），但发生了**行为类别塌缩**：整类丢弃转向动作（20 个 eval 输出 `VEER` **0 次**）、几乎从不刹车/停车；**主导误差是纵向（不会停车）而非横向（不会转弯）**。A 类 surrogate 偏好优化（A2/A3/A4）相对 SFT（A1）在场景感知统计下**无显著差异**。详见 [`reports/abcd_full_20260930/ANALYSIS_REPORT.md`](../../../reports/abcd_full_20260930/ANALYSIS_REPORT.md)。
+模型学会了 RAT 协议的**格式**与"前进"意图（parse≈1.0、Goal≈0.9、A→T=1.0），但发生了**行为类别塌缩**：整类丢弃转向动作（20 个 eval 输出 `VEER` **0 次**）、几乎从不刹车/停车；**主导误差是纵向（不会停车）而非横向（不会转弯）**。A 类 surrogate 偏好优化（A2/A3/A4）相对 SFT（A1）在场景感知统计下**无显著差异**。详见 [`reports/abcd_final/ANALYSIS_REPORT.md`](../../../reports/abcd_final/ANALYSIS_REPORT.md)。
 
 ## 目录结构
 
@@ -35,7 +35,7 @@ SHA256SUMS               上述全部文件的 SHA256 校验和
 
 ## 指标说明
 
-`ADE_m`/`FDE_m`（米，越小越好）、`Goal`（前向奖励，越大越好）、`parse_success_rate`（六点轨迹解析成功率）、`A_to_T_consistency`（动作→轨迹一致）、`scene_reference_rate`（场景引用）、`Lat_ms_mean`（延迟）。完整定义见 `metrics/*.json` 的 `metric_notes`，汇总统计见 `reports/abcd_full_20260930/results_summary.json`。
+`ADE_m`/`FDE_m`（米，越小越好）、`Goal`（前向奖励，越大越好）、`parse_success_rate`（六点轨迹解析成功率）、`A_to_T_consistency`（动作→轨迹一致）、`scene_reference_rate`（场景引用）、`Lat_ms_mean`（延迟）。完整定义见 `metrics/*.json` 的 `metric_notes`，汇总统计见 `reports/abcd_final/results_summary.json`。
 
 ## 已知边界（论文必须声明）
 

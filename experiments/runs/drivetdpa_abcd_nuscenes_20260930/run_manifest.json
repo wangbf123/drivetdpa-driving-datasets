@@ -27,7 +27,7 @@
     "D"
   ],
   "source_root": "/mnt/workspace/drivetdpa_experiments/abcd_full_20260930",
-  "report_path": "reports/abcd_full_20260930",
+  "report_path": "reports/abcd_final",
   "artifacts": {
     "metrics": 20,
     "predictions": 20,

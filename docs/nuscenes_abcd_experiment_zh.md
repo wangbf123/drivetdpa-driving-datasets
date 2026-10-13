@@ -70,8 +70,8 @@ Reasoning（推理 think） → Action（动作，3 步） → Trajectory（轨�
 
 ## 5. 文件入口
 
-- 主报告：[`reports/abcd_full_20260930/ANALYSIS_REPORT.md`](../reports/abcd_full_20260930/ANALYSIS_REPORT.md)
-- 机器可读结论：[`reports/abcd_full_20260930/analysis_findings.json`](../reports/abcd_full_20260930/analysis_findings.json)
+- 主报告：[`reports/abcd_final/ANALYSIS_REPORT.md`](../reports/abcd_final/ANALYSIS_REPORT.md)
+- 机器可读结论：[`reports/abcd_final/analysis_findings.json`](../reports/abcd_final/analysis_findings.json)
 - 原始 run 数据：[`experiments/runs/drivetdpa_abcd_nuscenes_20260930/`](../experiments/runs/drivetdpa_abcd_nuscenes_20260930/)
 - 复现脚本：[`scripts/experiments/abcd_full/`](../scripts/experiments/abcd_full/)
 

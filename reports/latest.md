@@ -8,8 +8,8 @@
 C1–C2（动作层消融）、D1–D2（Talk2BEV 消融）在 NuScenes scene-disjoint 切分（2523 训练 /
 180 held-out / 9 场景）上完成。
 
-**权威报告**：[`abcd_full_20260930/ANALYSIS_REPORT.md`](abcd_full_20260930/ANALYSIS_REPORT.md)
-**机器可读结论**：[`abcd_full_20260930/analysis_findings.json`](abcd_full_20260930/analysis_findings.json)
+**权威报告**：[`abcd_final/ANALYSIS_REPORT.md`](abcd_final/ANALYSIS_REPORT.md)
+**机器可读结论**：[`abcd_final/analysis_findings.json`](abcd_final/analysis_findings.json)
 **原始数据**：[`../experiments/runs/drivetdpa_abcd_nuscenes_20260930/`](../experiments/runs/drivetdpa_abcd_nuscenes_20260930/)
 
 **核心结论**：模型学会了 RAT 协议格式与"前进"意图，但发生**行为类别塌缩**——整类丢弃

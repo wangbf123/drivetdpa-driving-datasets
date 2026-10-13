@@ -16,7 +16,7 @@
 | [`drivetdpa_abcd_nuscenes_20260924`](runs/drivetdpa_abcd_nuscenes_20260924/) | 单场景 pilot（450 训练样本） |
 | [`drivetdpa_abcd_nuscenes_20260930`](runs/drivetdpa_abcd_nuscenes_20260930/) | **全量 scene-disjoint**（2523 训练 / 180 held-out，9 场景）——最终版 |
 
-权威分析见 [`reports/abcd_full_20260930/`](../reports/abcd_full_20260930/)，中文解读见
+权威分析见 [`reports/abcd_final/`](../reports/abcd_final/)，中文解读见
 [`docs/nuscenes_abcd_experiment_zh.md`](../docs/nuscenes_abcd_experiment_zh.md)。
 
 ## 在采集服务器运行
