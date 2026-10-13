@@ -1,0 +1,160 @@
+{
+  "schema_version": "drivetdpa.abcd.analysis.v2",
+  "source_run": "/mnt/workspace/drivetdpa_experiments/abcd_full_20260930",
+  "verified": true,
+  "corrections_vs_v1": [
+    "v1 曾判断‘误差集中在直行样本、转向样本误差不高’但未定位原因；本轮确认该现象由 GT 停车样本驱动。",
+    "v1 分析脚本中一个正则未匹配实际段落标题('### Correct action:'而非'3-second actions:')，曾误报‘GT 零转向样本’；已修正，实际 held-out 有 52/180 样本含转向动作。"
+  ],
+
+  "label_action_composition": {
+    "heldout_n": 180,
+    "train_n": 2523,
+    "heldout_contains_VEER_samples": 52,
+    "heldout_contains_VEER_pct": 0.289,
+    "train_contains_VEER_samples": 710,
+    "train_contains_VEER_pct": 0.281,
+    "heldout_contains_DECELERATE_samples": 32,
+    "heldout_contains_DECELERATE_pct": 0.178,
+    "heldout_contains_ACCELERATE_samples": 109,
+    "heldout_contains_ACCELERATE_pct": 0.606,
+    "gt_action_vocabulary_slots_over_180_samples": {
+      "FOLLOW_LANE": 423, "ACCELERATE": 302, "MAINTAIN": 148,
+      "DECELERATE": 90, "VEER_RIGHT": 86, "VEER_LEFT": 31
+    }
+  },
+
+  "model_action_collapse": {
+    "VEER_output_count_across_all_20_evals": 0,
+    "predicted_vocabulary": ["FOLLOW_LANE", "ACCELERATE", "MAINTAIN", "DECELERATE"],
+    "lateral_never_predicted": true,
+    "gt_turn_samples_not_turned_A4_seed42": "52/52",
+    "extreme_case": "A1 seed17 输出 FOLLOW_LANE+ACCELERATE 180/180",
+    "note": "模型整类丢弃横向动作(VEER_LEFT/VEER_RIGHT)；纵向含 ACCELERATE/MAINTAIN/DECELERATE 但不含停车"
+  },
+
+  "lateral_displacement_m_x6": {
+    "gt_all_mean": 1.047,
+    "gt_turn_samples_n": 52,
+    "gt_turn_samples_mean_abs": 3.24,
+    "gt_turn_samples_median_abs": 2.87,
+    "gt_turn_samples_max_abs": 9.98,
+    "gt_non_turn_samples_mean_abs": 0.16,
+    "model_all_mean_abs_range": [0.094, 0.157],
+    "model_pct_abs_below_0.5m": 1.0
+  },
+
+  "longitudinal_displacement_m_y6": {
+    "gt_all_mean": 16.31,
+    "gt_all_median": 16.55,
+    "gt_brake_samples_n": 32,
+    "gt_brake_samples_mean": 0.44,
+    "gt_brake_samples_median": 0.00,
+    "gt_accel_samples_n": 109,
+    "gt_accel_samples_mean": 22.95,
+    "model_median_range": [18.48, 21.82],
+    "model_on_gt_brake_samples_mean": 14.3,
+    "model_on_gt_brake_samples_median": 12.0,
+    "model_on_gt_brake_samples_min": 11.3,
+    "model_pct_below_3m": "≈0 (seed42 上为 0 例)",
+    "unique_y6_values_per_seed_per_180": {
+      "A1_SFT": [17, 27, 42], "A2_physics": [50, 75, 73],
+      "A3_jpo": [31, 43, 57], "A4_vldpo": [29, 40, 43]
+    }
+  },
+
+  "ade_by_gt_behavior_class": {
+    "A1_SFT":   {"turn_n52": 5.242, "no_turn_n128": 6.043, "brake_n32": 10.133, "accel_n109": 4.877},
+    "A2_physics": {"turn_n52": 5.009, "no_turn_n128": 6.599, "brake_n32": 11.222, "accel_n109": 4.497},
+    "A3_jpo":   {"turn_n52": 5.087, "no_turn_n128": 6.259, "brake_n32": 10.711, "accel_n109": 4.606},
+    "A4_vldpo": {"turn_n52": 5.088, "no_turn_n128": 6.355, "brake_n32": 10.820, "accel_n109": 4.729},
+    "conclusion": "主导超额误差来自刹车样本(ADE≈10-11m, 2x均值)，而非转向样本(≈5.0m)"
+  },
+
+  "think_is_recitation": {
+    "config": "C1_R_to_T",
+    "metric": "8-gram verbatim copy rate from input question",
+    "mean": 0.854,
+    "median": 0.883,
+    "note": "think 复述 BEV 上下文数字，但未影响 action/trajectory；BEV risk=pedestrian_nearby 样本仍输出 FOLLOW_LANE+ACCELERATE"
+  },
+
+  "parse_failure_content": {
+    "B1_image_text": {"fails": 71, "of": 180, "mode": "幻觉泛化叙述'clear road ahead with no immediate hazards'，无 BEV 数字，无法产出可解析轨迹"},
+    "D1_no_talk2bev": {"fails": 71, "of": 180, "mode": "同 B1（与 B1 输出逐字相同）"},
+    "B4_image_speech_bev": {"fails": 82, "of": 180, "mode": "复述 BEV 但格式破坏/截断"}
+  },
+
+  "preference_ablation_wilcoxon_ADE_n180": {
+    "A1_vs_A2": {"p": 0.0011, "cohens_d": -0.199},
+    "A1_vs_A3": {"p": 0.0421, "cohens_d": -0.113},
+    "A1_vs_A4": {"p": 0.0024, "cohens_d": -0.177},
+    "D1_vs_D2": {"n_pairs": 109, "p": 0.7021, "cohens_d": -0.013}
+  },
+
+  "trajectory_diversity_seed42": {
+    "A1_SFT": {"unique": 30, "top3_share": 0.550},
+    "A2_physics": {"unique": 73, "top3_share": 0.300},
+    "A3_jpo": {"unique": 50, "top3_share": 0.472},
+    "A4_vldpo": {"unique": 52, "top3_share": 0.456}
+  },
+
+  "a_class_scene_aware_test": {
+    "warning": "逐样本 Wilcoxon 忽略场景聚类，反保守；以下为正确的场景感知检验(n=9 场景配对+cluster bootstrap)",
+    "per_sample_wilcoxon_naive": {
+      "A1_vs_A2": {"p": 0.0011, "cohens_d": -0.199},
+      "A1_vs_A3": {"p": 0.0421, "cohens_d": -0.113},
+      "A1_vs_A4": {"p": 0.0024, "cohens_d": -0.177}
+    },
+    "scene_aware": {
+      "A1_minus_A2": {"mean_diff_m": -0.33, "ci95": [-1.04, 0.42], "wilcoxon_p_scene": 0.570, "significant": false},
+      "A1_minus_A3": {"mean_diff_m": -0.11, "ci95": [-0.48, 0.29], "wilcoxon_p_scene": 0.652, "significant": false},
+      "A1_minus_A4": {"mean_diff_m": -0.18, "ci95": [-0.54, 0.21], "wilcoxon_p_scene": 0.359, "significant": false}
+    },
+    "conclusion": "A1–A4 统计上不可区分（无差异），非'偏好训练更差'"
+  },
+
+  "scene_level_variance": {
+    "n_scenes": 9,
+    "a1_per_scene_ade": {
+      "day": [10.04, 9.85, 8.02],
+      "night": [4.42, 4.29, 3.23],
+      "rain": [8.94, 2.12, 1.39]
+    },
+    "between_scene_sd_m": 3.21,
+    "within_scene_var_mean": 5.88,
+    "a1_cluster_bootstrap_ci95": [3.71, 7.91],
+    "point_estimate_adjusted": 5.81,
+    "collapse_per_scene_straight_rate": "9/9 场景均 60/60 = 100%",
+    "conclusion": "条件与场景完全混淆(n=3/类)，场景身份主导方差；不可下光照鲁棒性结论；但塌缩结论与场景无关，极其稳健"
+  },
+
+  "independent_verification": {
+    "raw_text_contains_VEER": {"count": 0, "of": 3600, "conclusion": "模型确实从不生成转向，排除解析器丢弃 artifact"},
+    "raw_text_truncated": false,
+    "label_vs_geometry_consistency": {
+      "heldout": {"agreement": 0.972, "label_turns": 52, "geometric_turns": 57},
+      "train": {"agreement": 0.926, "label_turns": 710, "geometric_turns": 866},
+      "conclusion": "伪标签可信且偏保守；模型失效比标签所示更严重"
+    },
+    "direction_sign_sanity": {
+      "VEER_RIGHT_n": 38, "VEER_RIGHT_x6_mean": 2.70, "VEER_RIGHT_pct_x6_positive": 1.0,
+      "VEER_LEFT_n": 14, "VEER_LEFT_x6_mean": -4.70, "VEER_LEFT_pct_x6_negative": 1.0,
+      "conclusion": "坐标框架与 ADE 计算无误"
+    },
+    "think_recitation_generality": {
+      "A1_SFT": 0.854, "A2_physics": 0.854, "A4_vldpo": 0.854,
+      "conclusion": "think 由输入决定、不随训练权重变化，非推理"
+    }
+  },
+
+  "boundaries": [
+    "偏好对为 surrogate（非真实 reward rollout）",
+    "语音为转写 proxy（无音频编码器）",
+    "评估 greedy（do_sample=False）",
+    "训练 200 步 / 1B 模型",
+    "Unsup 未计算；TMC 为 A→T 代理；R_to_A_consistency 在无方向标注时为 null",
+    "held-out 仅 9 场景（每类 3）→ 条件对比存在选景偏差",
+    "动作标签为启发式伪标签 → '不输出 VEER' 是相对该伪标签的结论"
+  ]
+}

@@ -1,9 +1,23 @@
 # 自动化实验数据
 
-`runs/` 保存可直接审阅的小型实验包，`index.jsonl` 是机器可读总索引。每个 run 来自
-一个 SHA256 匹配的 CARLA 前视相机帧和 Talk2BEV-compatible 场景上下文，之后重新
-执行真实 DriveTDPA 多 seed rollout、候选安全门控、真实 VLM judge 和当前 TPO
-loader。
+`runs/` 保存可直接审阅的小型实验包，`index.jsonl` 是机器可读总索引。`runs/` 中有两类 run：
+
+1. **CARLA 偏好实验**（`carla_pref_*`，约 990 个）：每个 run 来自一个 SHA256 匹配的
+   CARLA 前视相机帧和 Talk2BEV-compatible 场景上下文，之后重新执行真实 DriveTDPA 多
+   seed rollout、候选安全门控、真实 VLM judge 和当前 TPO loader。
+2. **NuScenes A–D 开环消融**（`drivetdpa_abcd_nuscenes_*`，2 个）：对照实验指导在
+   NuScenes 上运行的 A/B/C/D 四组消融的 metrics、predictions 与分析报告，不套用
+   CARLA `run_manifest.json` 结构（因此 `validate_experiment.py` 会跳过它们）。
+
+## NuScenes A–D 开环消融
+
+| run | 说明 |
+|---|---|
+| [`drivetdpa_abcd_nuscenes_20260924`](runs/drivetdpa_abcd_nuscenes_20260924/) | 单场景 pilot（450 训练样本） |
+| [`drivetdpa_abcd_nuscenes_20260930`](runs/drivetdpa_abcd_nuscenes_20260930/) | **全量 scene-disjoint**（2523 训练 / 180 held-out，9 场景）——最终版 |
+
+权威分析见 [`reports/abcd_full_20260930/`](../reports/abcd_full_20260930/)，中文解读见
+[`docs/nuscenes_abcd_experiment_zh.md`](../docs/nuscenes_abcd_experiment_zh.md)。
 
 ## 在采集服务器运行
 

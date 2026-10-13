@@ -1,0 +1,32 @@
+{
+  "schema_version": "drivetdpa.abcd.full.stage.v1",
+  "train_samples": 2523,
+  "train_scenes": 841,
+  "heldout_samples": 180,
+  "heldout_scenes": 9,
+  "heldout_scene_tokens": [
+    "09f67057dd8346388b28f79d9bb1cf04",
+    "599c50b42e294116bd702c9e5cc830a3",
+    "6193fac132614eb1a09dcbf3f359460f",
+    "64e1ad8a976542ab86c427d714550d06",
+    "83773bcf46ac486383529098de0542dd",
+    "c6c092a66329470f836714f46b92d59b",
+    "ca6abd081eaf48689f06b5e8fcc9d369",
+    "dcd5bc29543747e28ef02816dd458290",
+    "e54f4a36a8b94aebbe4189186dee8f05"
+  ],
+  "heldout_condition_counts": {
+    "day": 60,
+    "night": 60,
+    "rain": 60
+  },
+  "train_condition_counts": {
+    "day": 1797,
+    "night": 288,
+    "rain": 438
+  },
+  "scene_disjoint": true,
+  "preference": "surrogate (physics/jpo/vldpo rejected answers locally constructed)",
+  "speech": "transcript proxy (no audio encoder)",
+  "seeds_note": "training seeds applied by the driver; eval is greedy (do_sample=False)"
+}

@@ -1,0 +1,9 @@
+{
+  "NUSCENES_TRAIN": {
+    "annotation": "/mnt/workspace/drivetdpa_experiments/abcd_full_20260930/data/train_sft.jsonl",
+    "root": "/",
+    "repeat_time": 1,
+    "length": 2523,
+    "scene_count": 841
+  }
+}

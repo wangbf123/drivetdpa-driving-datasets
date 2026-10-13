@@ -1,0 +1,8 @@
+{
+  "NUSCENES": {
+    "annotation": "/mnt/workspace/drivetdpa_experiments/abcd_full_20260930/data/A2_physics.jsonl",
+    "root": "/",
+    "repeat_time": 1,
+    "preference_source": "surrogate_preference"
+  }
+}

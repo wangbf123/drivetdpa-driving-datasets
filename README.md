@@ -1,10 +1,49 @@
-# DriveTDPA CARLA 自动驾驶数据集
+# DriveTDPA 数据集与实验仓库
 
-本仓库是 DriveTDPA 项目的公开数据门户，用于组织和展示 CARLA 自动驾驶实验产生的数据。它将仿真传感器、Autoware 状态、动态 BEV、Talk2BEV 场景描述、DriveTDPA 轨迹预测、偏好选择、控制指令和下一帧反馈串联成可以追踪、验证和复现实验的场景记录。
+> DriveTDPA 项目的数据门户：**CARLA 自动驾驶数据规范与采集** + **NuScenes A–D 开环消融实验**的完整数据、分析与报告。
 
-> 当前状态：**数据规范、格式示例和自动实验预发布数据**。`examples/` 仍只用于说明格式；`experiments/runs/` 保存已经过真实模型、真实 judge、loader 和 SHA256 校验的小型 CARLA recorded-seed 实验包。它们不是完整实时闭环数据集，也不能视为 Ground Truth。
+![NuScenes A-D](https://img.shields.io/badge/experiment-NuScenes%20A%E2%80%93D-blue)
+![CARLA](https://img.shields.io/badge/source-CARLA-orange)
+![InternVL](https://img.shields.io/badge/model-InternVL%203.5--1B-blueviolet)
+![status](https://img.shields.io/badge/status-pre--release-yellow)
 
-## 项目完整链路
+## 目录
+
+- [最新：NuScenes A–D 开环消融实验](#nuscenes-a-d-开环消融实验)
+- [CARLA 数据集门户](#carla-数据集门户)
+- [仓库目录](#仓库目录)
+- [快速校验](#快速校验)
+- [数据怎么存](#数据怎么存)
+- [数据真实性规则](#数据真实性规则)
+- [详细文档](#详细文档)
+
+---
+
+## NuScenes A–D 开环消融实验
+
+**这是本仓库当前最完整的实验成果**（`drivetdpa_abcd_nuscenes_20260930`），对照实验指导在 NuScenes 上完成 A/B/C/D 四组开环消融。
+
+**一句话结论**：模型学会了 RAT 协议的**格式**与"前进"意图，但发生**行为类别塌缩**——整类丢弃转向、几乎从不刹车；**主导误差是纵向（不会停车）**；surrogate 偏好优化（A2/A3/A4）相对 SFT **无精度增益**（场景感知统计下 A1–A4 不可区分）。
+
+| 入口 | 说明 |
+|---|---|
+| [📄 主报告](reports/abcd_full_20260930/ANALYSIS_REPORT.md) | 论文级分析（行为塌缩三层证据、误差归因、场景感知统计、三次修正） |
+| [📊 机器可读结论](reports/abcd_full_20260930/analysis_findings.json) | 17 个结构化字段，可直接引用 |
+| [📦 原始 run 数据](experiments/runs/drivetdpa_abcd_nuscenes_20260930/) | 20 份 metrics + predictions + held-out 集 + SHA256 |
+| [📖 中文说明](docs/nuscenes_abcd_experiment_zh.md) | 面向中文读者的完整解读 |
+| [🔧 复现脚本](scripts/experiments/abcd_full/) | 数据切分 → 训练 → 评估 → 报告，可断点续跑 |
+
+**六条强支撑主张**：① A1–A4 无显著差异；② 整类丢弃转向 + 从不刹车（与场景无关）；③ 误差主因是刹车；④ BEV 是输出合规必要输入；⑤ Action 层独立贡献 +22%；⑥ think 是复述而非推理。
+
+---
+
+## CARLA 数据集门户
+
+本仓库同时是 CARLA 自动驾驶实验的数据门户：将仿真传感器、Autoware 状态、动态 BEV、Talk2BEV 场景描述、DriveTDPA 轨迹预测、偏好选择、控制指令和下一帧反馈串联成可追踪、可验证、可复现的场景记录。
+
+> 当前状态：**数据规范、格式示例和自动实验预发布数据**。`examples/` 仅用于说明格式；`experiments/runs/` 保存已经过真实模型、真实 judge、loader 和 SHA256 校验的小型 CARLA recorded-seed 实验包。它们不是完整实时闭环数据集，也不能视为 Ground Truth。
+
+### 项目完整链路
 
 ```text
 CARLA 相机 / LiDAR / GNSS / IMU / 车辆状态
@@ -21,7 +60,7 @@ CARLA 相机 / LiDAR / GNSS / IMU / 车辆状态
 
 本仓库正式数据均使用 `source: "carla"`。偏好对来自**同一个 CARLA 场景、同一帧输入**的多次 DriveTDPA rollout，不会将无关输入或伪造数据混合成偏好样本。
 
-## 每一帧包含什么
+### 每一帧包含什么
 
 | 链路阶段 | 数据示例 | 常见文件格式 |
 | --- | --- | --- |
@@ -36,7 +75,7 @@ CARLA 相机 / LiDAR / GNSS / IMU / 车辆状态
 
 字段说明见[数据字典](docs/data_dictionary.md)，完整关联示例见[场景示例](examples/scene_000001/manifest.json)。
 
-## 计划发布的数据集
+### 计划发布的数据集
 
 | 数据集版本 | 内容 | 状态 |
 | --- | --- | --- |
@@ -50,14 +89,14 @@ CARLA 相机 / LiDAR / GNSS / IMU / 车辆状态
 ## 仓库目录
 
 ```text
-docs/                 架构、采集协议、字段说明和 ROS Topic
-datasets/             正式数据集发布位置和存储约定
-manifests/            场景及大文件的机器可读索引
-schemas/              用于自动校验的 JSON Schema
-examples/             小型 CARLA 格式示例场景
-reports/              实验汇总、指标和图表
-experiments/          自动实验 run、机器可读索引和逐文件校验和
-scripts/              数据校验、校验和与安全下载工具
+docs/                  架构、采集协议、字段说明、中文说明和 ROS Topic
+datasets/              正式数据集发布位置和存储约定
+manifests/             场景及大文件的机器可读索引
+schemas/               用于自动校验的 JSON Schema
+examples/              小型 CARLA 格式示例场景
+reports/               实验汇总、指标和图表（含 NuScenes A–D 分析报告）
+experiments/           自动实验 run、机器可读索引和逐文件校验和
+scripts/               数据校验、校验和、下载与 A–D 复现脚本
 ```
 
 ## 快速校验
@@ -102,4 +141,5 @@ GitHub 保存文档、Schema、小型示例、manifest、校验和、图表和�
 - [数据字典](docs/data_dictionary.md)
 - [ROS 2 Topic 清单](docs/ros_topics.md)
 - [存储与发布规范](docs/storage_and_release.md)
+- [NuScenes A–D 实验中文说明](docs/nuscenes_abcd_experiment_zh.md)
 - [数据贡献说明](CONTRIBUTING.md)

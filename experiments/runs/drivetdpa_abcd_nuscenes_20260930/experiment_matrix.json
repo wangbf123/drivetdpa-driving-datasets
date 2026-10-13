@@ -1,0 +1,174 @@
+{
+  "schema_version": "drivetdpa.abcd.experiment_matrix.v1",
+  "run_id": "drivetdpa_abcd_nuscenes_20260930",
+  "source": "NuScenes v1.0-trainval scene-disjoint",
+  "train_rows": 2523,
+  "train_scenes": 841,
+  "eval_rows": 180,
+  "eval_scenes": 9,
+  "groups": {
+    "A": {
+      "name_zh": "训练目标消融（偏好优化）",
+      "configs": {
+        "A1_SFT": {
+          "name_zh": "SFT 基线",
+          "input_mode": "full",
+          "output_protocol": "rat"
+        },
+        "A2_physics": {
+          "name_zh": "物理约束偏好训练（surrogate）",
+          "input_mode": "full",
+          "output_protocol": "rat"
+        },
+        "A3_jpo": {
+          "name_zh": "联合偏好优化 JPO（surrogate）",
+          "input_mode": "full",
+          "output_protocol": "rat"
+        },
+        "A4_vldpo": {
+          "name_zh": "VL-DPO 偏好优化（surrogate）",
+          "input_mode": "full",
+          "output_protocol": "rat"
+        }
+      }
+    },
+    "B": {
+      "name_zh": "输入模态消融",
+      "configs": {
+        "B1_image_text": {
+          "name_zh": "图像 + 文本（无 BEV）",
+          "input_mode": "image_text",
+          "output_protocol": "rat"
+        },
+        "B2_image_speech": {
+          "name_zh": "图像 + 语音转写（无 BEV）",
+          "input_mode": "image_speech",
+          "output_protocol": "rat"
+        },
+        "B3_image_text_bev": {
+          "name_zh": "图像 + 文本 + BEV",
+          "input_mode": "full",
+          "output_protocol": "rat"
+        },
+        "B4_image_speech_bev": {
+          "name_zh": "图像 + 语音转写 + BEV",
+          "input_mode": "full_speech",
+          "output_protocol": "rat"
+        }
+      }
+    },
+    "C": {
+      "name_zh": "动作层（推理路径）消融",
+      "configs": {
+        "C1_R_to_T": {
+          "name_zh": "R→T（去动作层）",
+          "input_mode": "trajectory_only",
+          "output_protocol": "trajectory_only"
+        },
+        "C2_R_to_A_to_T": {
+          "name_zh": "R→A→T（完整 RAT）",
+          "input_mode": "full",
+          "output_protocol": "rat"
+        }
+      }
+    },
+    "D": {
+      "name_zh": "Talk2BEV 消融",
+      "configs": {
+        "D1_no_talk2bev": {
+          "name_zh": "不使用 Talk2BEV",
+          "input_mode": "no_bev",
+          "output_protocol": "rat"
+        },
+        "D2_talk2bev": {
+          "name_zh": "使用 Talk2BEV",
+          "input_mode": "full",
+          "output_protocol": "rat"
+        }
+      }
+    }
+  },
+  "metrics_summary": {
+    "A1_SFT": {
+      "seeds": 3,
+      "ADE_m": "5.811±0.604",
+      "FDE_m": "9.995±1.012",
+      "Goal": "0.908"
+    },
+    "A2_physics": {
+      "seeds": 3,
+      "ADE_m": "6.140±0.502",
+      "FDE_m": "10.600±0.839",
+      "Goal": "0.852"
+    },
+    "A3_jpo": {
+      "seeds": 3,
+      "ADE_m": "5.920±0.575",
+      "FDE_m": "10.188±0.938",
+      "Goal": "0.877"
+    },
+    "A4_vldpo": {
+      "seeds": 3,
+      "ADE_m": "5.989±0.704",
+      "FDE_m": "10.283±1.176",
+      "Goal": "0.879"
+    },
+    "B1_image_text": {
+      "seeds": 1,
+      "ADE_m": "5.694",
+      "FDE_m": "9.818",
+      "Goal": "0.986",
+      "parse_success_rate": "0.606"
+    },
+    "B2_image_speech": {
+      "seeds": 1,
+      "ADE_m": "5.652",
+      "FDE_m": "9.809",
+      "Goal": "0.989",
+      "parse_success_rate": "0.967"
+    },
+    "B3_image_text_bev": {
+      "seeds": 1,
+      "ADE_m": "5.530",
+      "FDE_m": "9.491",
+      "Goal": "0.916",
+      "parse_success_rate": "1.000"
+    },
+    "B4_image_speech_bev": {
+      "seeds": 1,
+      "ADE_m": "5.018",
+      "FDE_m": "8.728",
+      "Goal": "0.911",
+      "parse_success_rate": "0.544"
+    },
+    "C1_R_to_T": {
+      "seeds": 1,
+      "ADE_m": "6.749",
+      "FDE_m": "11.590",
+      "Goal": "0.988",
+      "parse_success_rate": "1.000"
+    },
+    "C2_R_to_A_to_T": {
+      "seeds": 1,
+      "ADE_m": "5.530",
+      "FDE_m": "9.491",
+      "Goal": "0.916",
+      "parse_success_rate": "1.000"
+    },
+    "D1_no_talk2bev": {
+      "seeds": 1,
+      "ADE_m": "5.694",
+      "FDE_m": "9.818",
+      "Goal": "0.986",
+      "parse_success_rate": "0.606"
+    },
+    "D2_talk2bev": {
+      "seeds": 1,
+      "ADE_m": "5.530",
+      "FDE_m": "9.491",
+      "Goal": "0.916",
+      "parse_success_rate": "1.000"
+    }
+  },
+  "note": "A-class: 3 training seeds (42/17/23), mean±std (population). B/C/D: single-checkpoint protocol ablations on A4 seed42 reference."
+}

@@ -1,0 +1,9 @@
+{
+  "NUSCENES_HELDOUT": {
+    "annotation": "/mnt/workspace/drivetdpa_experiments/abcd_full_20260930/data/heldout.jsonl",
+    "root": "/",
+    "repeat_time": 1,
+    "length": 180,
+    "scene_count": 9
+  }
+}
