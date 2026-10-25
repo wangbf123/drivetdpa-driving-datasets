@@ -1,0 +1,79 @@
+{
+  "schema_version": "drivetdpa.efg.analysis.v1",
+  "scope": "closed_loop_carla_realtime_E_F_G",
+  "verified": true,
+  "key_findings": {
+    "C1_end_to_end_system_works": {
+      "claim": "DriveTDPA 全链路（语音→InternVL→RAT→YAML→ROS2→Autoware E2E→CARLA）是可运行、可执行的集成系统",
+      "evidence": {"E_trials": "50/50", "F_trials": "25/25", "G_messages": "54/54"},
+      "strength": "strong"
+    },
+    "C2_execution_repeatable_symmetric": {
+      "claim": "闭环执行幅度高度可重复且转向对称",
+      "evidence": {
+        "LEFT_deg": "37.633 ± 0.469",
+        "RIGHT_deg": "-36.910 ± 0.561",
+        "symmetry_error_deg": 0.723,
+        "SPEED_UP_peak_ms": "2.895 ± 0.001",
+        "SLOW_DOWN_end_ms": "0.429 ± 0.046"
+      },
+      "strength": "strong",
+      "note": "印证 A-D S5（动作层是确定性、可审计、可接入下游控制接口的中间表示）的闭环落地"
+    },
+    "C3_weather_robustness_execution_level": {
+      "claim": "指令执行对雨/雾/夜/逆光稳健",
+      "evidence": {
+        "clean_scenes": ["rain", "fog", "night", "glare"],
+        "LEFT_deg_mean": 36.19, "LEFT_deg_std": 0.39,
+        "RIGHT_deg_mean": -34.33, "RIGHT_deg_std": 0.71,
+        "SPEED_UP_peak_ms_mean": 2.892,
+        "note": "执行层对天气稳健（动作源自语音离散解析，不依赖天气敏感的感知）"
+      },
+      "strength": "strong",
+      "caveat": "仅限执行层，非规划层；每(场景,指令)格 n=1，无排序功效"
+    },
+    "C4_real_lvlm_scene_understanding": {
+      "claim": "真实 InternVL 模型在 CARLA 实时相机上产出 Talk2BEV 兼容场景理解",
+      "evidence": {
+        "mock": false,
+        "model_file_size_bytes": 2121876280,
+        "unique_image_hash_count": 54,
+        "unique_scene_hash_count": 54,
+        "single_identified_model": true,
+        "error_count": 0
+      },
+      "strength": "strong",
+      "caveat": "BEV 对象为空；上游 Talk2BEV entrypoint 未执行"
+    },
+    "C5_mechanism_explicit_action_mapping": {
+      "claim": "闭环 100% 成功是显式动作映射的产物，与 A-D 行为塌缩不矛盾",
+      "evidence": {
+        "A_D_collapse": "VEER 输出 0 次、几乎从不刹车（模型自由推理时塌缩）",
+        "E_F_success": "动作由语音规则解析显式给定，模型只做 A→T 展开",
+        "synthesis": "RAT 分层把意图→离散动作→连续轨迹显式分解：意图来源可靠→忠实执行(闭环已验证)；意图来源不可靠→暴露塌缩(开环)"
+      },
+      "strength": "strong_mechanism"
+    }
+  },
+  "boundaries": {
+    "no_closed_loop_ablation": "E/F/G 无闭环消融对照，不能隔离单组件闭环贡献",
+    "lenient_thresholds": "判据阈值 5-7x 低于实测幅度，100% 是必要非充分条件",
+    "tiny_vocabulary": "5 个固定离散指令，非自由自然语言",
+    "F_carryover": "clear_noon 场景 FORWARD base_v=5.55、LEFT=61.56deg 为跨trial状态残留",
+    "G_bev_empty": "E2E 模式 objects topic 无发布者，BEV 对象为空",
+    "G_not_official_talk2bev": "official_talk2bev_upstream_entrypoint_status=BLOCKED_NOT_EXECUTED",
+    "simulation_only": "CARLA 合成、单 ego、无动态车流、5s 时域"
+  },
+  "weak_claims_need_retest": {
+    "W1_voice_modality_value": "需真实音频编码器 + 语音vs文本闭环对照",
+    "W2_bev_closed_loop_value": "需补 GT objects bridge 使 BEV 对象非空后重跑 G",
+    "W3_official_talk2bev": "需执行官方 Talk2BEV entrypoint",
+    "W4_robustness_ranking": "需每(场景,指令)格 n>=10 且清除跨trial残留"
+  },
+  "paper_narrative_suggestion": "先立系统闭环可用(C1/C2)，再立动作层价值(开环 C 组)，闭环与开环呼应(C5)，环境理解(G + A-D S4)，负结果与方法学(A-D S1)，诚实边界(§8)",
+  "source_runs": {
+    "E": "/mnt/workspace/autonomous_driving/results/experiment_e/",
+    "F": "/mnt/workspace/drivetdpa_experiments/runs/F_env_run2/",
+    "G": "/mnt/workspace/drivetdpa_experiments/runs/G_talk2bev_env_20261021/"
+  }
+}

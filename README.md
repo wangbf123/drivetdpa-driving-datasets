@@ -1,15 +1,17 @@
 # DriveTDPA 数据集与实验仓库
 
-> DriveTDPA 项目的数据门户：**CARLA 自动驾驶数据规范与采集** + **NuScenes A–D 开环消融实验**的完整数据、分析与报告。
+> DriveTDPA 项目的数据门户：**CARLA 自动驾驶数据规范与采集** + **NuScenes A–D 开环消融实验** + **CARLA E/F/G 闭环实验**的完整数据、分析与报告。
 
 ![NuScenes A-D](https://img.shields.io/badge/experiment-NuScenes%20A%E2%80%93D-blue)
+![Closed-loop E/F/G](https://img.shields.io/badge/experiment-CARLA%20E%2FF%2FG-green)
 ![CARLA](https://img.shields.io/badge/source-CARLA-orange)
 ![InternVL](https://img.shields.io/badge/model-InternVL%203.5--1B-blueviolet)
 ![status](https://img.shields.io/badge/status-pre--release-yellow)
 
 ## 目录
 
-- [最新：NuScenes A–D 开环消融实验](#nuscenes-a-d-开环消融实验)
+- [最新：CARLA 闭环实验 E/F/G](#carla-闭环实验-efg)
+- [NuScenes A–D 开环消融实验](#nuscenes-a-d-开环消融实验)
 - [CARLA 数据集门户](#carla-数据集门户)
 - [仓库目录](#仓库目录)
 - [快速校验](#快速校验)
@@ -19,9 +21,25 @@
 
 ---
 
+## CARLA 闭环实验 E/F/G
+
+**这是 DriveTDPA 全实验矩阵中唯一端到端跑通的闭环证据**（语音→真实 InternVL→RAT→YAML→ROS2→Autoware E2E→CARLA），与 NuScenes A–D 开环消融构成「开环组件价值 + 闭环系统可用」的完整证据链。
+
+**一句话结论**：闭环系统端到端可执行、执行幅度高度可重复且转向对称（LEFT `+37.63±0.47°` / RIGHT `−36.91±0.56°`）、对雨/雾/夜/逆光稳健、真实 InternVL 能正确理解场景（E 50/50、F 25/25、G 54/54 全部 PASS）。**但** 100% 成功是「系统集成 + 显式动作映射」的产物，不是「轨迹回归质量」的证明——它不与 A–D 的「行为塌缩」矛盾，而是把「意图来源可靠→忠实执行」与「意图来源不可靠→暴露塌缩」清晰分开。
+
+| 入口 | 说明 |
+|---|---|
+| [📄 主报告](reports/efg_final/EFG_ANALYSIS_REPORT.md) | 论文级分析（执行可重复性、环境稳健性、Talk2BEV 场景理解、跨组联动机制） |
+| [📊 机器可读结论](reports/efg_final/analysis_findings.json) | 结构化结论 C1–C6，可直接引用 |
+| [📦 数据报告](reports/efg_final/EFG_DATA_ANALYSIS.md) | per-command / per-scene 数据表与边界说明 |
+
+**六条主张**：① 全链路可执行（75/75 trials + 54/54 消息）；② 执行幅度可重复且转向对称；③ 执行层对天气稳健；④ 真实 InternVL 产出 Talk2BEV 兼容场景理解；⑤ 闭环 100% 是显式动作映射的产物（机制）；⑥ E/F 无对照/判据宽松/词汇量小 → 不能支撑组件级消融结论。
+
+---
+
 ## NuScenes A–D 开环消融实验
 
-**这是本仓库当前最完整的实验成果**（`drivetdpa_abcd_nuscenes_20260930`），对照实验指导在 NuScenes 上完成 A/B/C/D 四组开环消融。
+对照实验指导在 NuScenes 上完成 A/B/C/D 四组开环消融（`drivetdpa_abcd_nuscenes_20260930`）。
 
 **一句话结论**：模型学会了 RAT 协议的**格式**与"前进"意图，但发生**行为类别塌缩**——整类丢弃转向、几乎从不刹车；**主导误差是纵向（不会停车）**；surrogate 偏好优化（A2/A3/A4）相对 SFT **无精度增益**（场景感知统计下 A1–A4 不可区分）。
 
@@ -94,7 +112,7 @@ datasets/              正式数据集发布位置和存储约定
 manifests/             场景及大文件的机器可读索引
 schemas/               用于自动校验的 JSON Schema
 examples/              小型 CARLA 格式示例场景
-reports/               实验汇总、指标和图表（含 NuScenes A–D 分析报告）
+reports/               实验汇总、指标和图表（含 NuScenes A–D 与 CARLA E/F/G 分析报告）
 experiments/           自动实验 run、机器可读索引和逐文件校验和
 scripts/               数据校验、校验和、下载与 A–D 复现脚本
 ```

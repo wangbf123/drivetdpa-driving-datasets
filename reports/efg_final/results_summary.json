@@ -1,0 +1,109 @@
+{
+  "schema_version": "drivetdpa.efg.closed_loop.report.v1",
+  "scope": "closed_loop_carla_realtime_E_F_G",
+  "control_chain": "voice/traj -> InternVL -> RAT -> YAML -> ROS2 -> Autoware E2E -> CARLA",
+  "judgment_clock": "carla_sim_time",
+  "experiment_E": {
+    "label": "E voice command closed-loop",
+    "source": "/mnt/workspace/autonomous_driving/results/experiment_e/",
+    "commands": ["FORWARD", "LEFT", "RIGHT", "SPEED_UP", "SLOW_DOWN"],
+    "n_per_command": 10,
+    "overall": {"success": 50, "total": 50, "rate": 1.0},
+    "per_command": {
+      "FORWARD": {
+        "n": 10, "success": 10, "rate": 1.0,
+        "v_peak_ms_mean": 2.246, "v_peak_ms_std": 0.011,
+        "v_end_ms_mean": 2.214, "v_end_ms_std": 0.030,
+        "dyaw_deg_mean": -0.015, "dyaw_deg_std": 0.052
+      },
+      "LEFT": {
+        "n": 10, "success": 10, "rate": 1.0,
+        "dyaw_deg_mean": 37.633, "dyaw_deg_std": 0.469,
+        "dyaw_deg_range": [36.627, 38.194]
+      },
+      "RIGHT": {
+        "n": 10, "success": 10, "rate": 1.0,
+        "dyaw_deg_mean": -36.910, "dyaw_deg_std": 0.561,
+        "dyaw_deg_range": [-37.574, -35.747]
+      },
+      "SPEED_UP": {
+        "n": 10, "success": 10, "rate": 1.0,
+        "base_v_ms_mean": 1.118,
+        "v_peak_ms_mean": 2.895, "v_peak_ms_std": 0.001,
+        "dv_peak_minus_base_ms_mean": 1.777, "dv_peak_minus_base_ms_std": 0.037
+      },
+      "SLOW_DOWN": {
+        "n": 10, "success": 10, "rate": 1.0,
+        "base_v_ms_mean": 1.656,
+        "v_end_ms_mean": 0.429, "v_end_ms_std": 0.046,
+        "dv_end_minus_base_ms_mean": -1.227, "dv_end_minus_base_ms_std": 0.043
+      }
+    },
+    "turning_symmetry": {
+      "LEFT_deg": 37.633, "RIGHT_deg": -36.910,
+      "symmetry_error_deg": 0.723,
+      "note": "LEFT/RIGHT 幅度对称误差 <1deg，各自 std <0.6deg"
+    },
+    "thresholds": {
+      "FORWARD": {"min_v": 0.3, "max_abs_dyaw": 0.2},
+      "LEFT": {"min_dyaw": 0.1},
+      "RIGHT": {"max_dyaw": -0.1},
+      "SPEED_UP": {"min_dv": 0.25},
+      "SLOW_DOWN": {"max_dv": -0.25}
+    }
+  },
+  "experiment_F": {
+    "label": "F environment robustness closed-loop",
+    "source": "/mnt/workspace/drivetdpa_experiments/runs/F_env_run2/",
+    "scenes": {"clear_noon": "晴空正午基线", "rain": "暴雨", "fog": "浓雾", "night": "夜晚", "glare": "日落逆光"},
+    "commands": ["FORWARD", "LEFT", "RIGHT", "SPEED_UP", "SLOW_DOWN"],
+    "overall": {"success": 25, "total": 25, "rate": 1.0},
+    "per_scene": {
+      "clear_noon": {"success": 5, "total": 5, "rate": 1.0, "LEFT_deg": 61.56, "RIGHT_deg": -34.87, "SPEED_UP_peak": 2.895, "SLOW_DOWN_end": 0.489, "FORWARD_base_v": 5.554, "note": "状态残留：FORWARD base_v=5.55、LEFT=61.56deg 为跨trial未停稳"},
+      "rain": {"success": 5, "total": 5, "rate": 1.0, "LEFT_deg": 36.12, "RIGHT_deg": -34.18, "SPEED_UP_peak": 2.892, "SLOW_DOWN_end": 0.474, "FORWARD_base_v": 0.0},
+      "fog": {"success": 5, "total": 5, "rate": 1.0, "LEFT_deg": 35.74, "RIGHT_deg": -35.31, "SPEED_UP_peak": 2.895, "SLOW_DOWN_end": 0.373, "FORWARD_base_v": 0.0},
+      "night": {"success": 5, "total": 5, "rate": 1.0, "LEFT_deg": 36.30, "RIGHT_deg": -33.86, "SPEED_UP_peak": 2.891, "SLOW_DOWN_end": 0.470, "FORWARD_base_v": 0.0},
+      "glare": {"success": 5, "total": 5, "rate": 1.0, "LEFT_deg": 36.60, "RIGHT_deg": -33.98, "SPEED_UP_peak": 2.891, "SLOW_DOWN_end": 0.468, "FORWARD_base_v": 0.0}
+    },
+    "clean_scenes_excluding_clear_noon": {
+      "LEFT_deg_mean": 36.19, "LEFT_deg_std": 0.39,
+      "RIGHT_deg_mean": -34.33, "RIGHT_deg_std": 0.71,
+      "SPEED_UP_peak_ms_mean": 2.892, "SPEED_UP_peak_ms_std": 0.002,
+      "note": "剔除 clear_noon 状态残留后，四场景动作幅度与 E 基线一致"
+    },
+    "per_command_across_scenes": {
+      "LEFT": {"n": 5, "dyaw_deg_mean": 41.27, "dyaw_deg_std": 11.35, "note": "含 clear_noon 残留 61.56"},
+      "RIGHT": {"n": 5, "dyaw_deg_mean": -34.44, "dyaw_deg_std": 0.63},
+      "SPEED_UP": {"n": 5, "dyaw_deg_mean": 0.0, "dyaw_deg_std": 0.0},
+      "SLOW_DOWN": {"n": 5, "dyaw_deg_mean": 0.001, "dyaw_deg_std": 0.029},
+      "FORWARD": {"n": 5, "dyaw_deg_mean": -0.912, "dyaw_deg_std": 2.036, "note": "含 clear_noon 残留 -4.55"}
+    }
+  },
+  "experiment_G": {
+    "label": "G Talk2BEV scene understanding closed-loop",
+    "source": "/mnt/workspace/drivetdpa_experiments/runs/G_talk2bev_env_20261021/",
+    "audit": {
+      "status": "PASS",
+      "schema_version": "drivetdpa.talk2bev_compatible_lvlm_audit.v1",
+      "message_count": 54,
+      "valid_message_count": 54,
+      "unique_image_hash_count": 54,
+      "unique_scene_hash_count": 54,
+      "single_identified_model": true,
+      "mock": false,
+      "error_count": 0,
+      "real_lvlm_messages_present": true,
+      "model_backend": "DriveTDPAPredictor",
+      "model_path": "/mnt/workspace/autonomous_driving/internvl_chat_gpt_oss/work_dirs/smoke_dpo_single_a10_20260620_161511",
+      "model_file_size_bytes": 2121876280,
+      "official_talk2bev_upstream_entrypoint_status": "BLOCKED_NOT_EXECUTED"
+    },
+    "bev_objects_empty_in_e2e_mode": true,
+    "note": "E2E 模式下 /perception/object_recognition/objects 无发布者，BEV 对象为空，LVLM 主要靠 CAM_FRONT 单目理解"
+  },
+  "cross_experiment_links": {
+    "A_D_action_layer_value_plus22pct": "E/F 的确定性执行印证动作层→轨迹→执行可闭环落地",
+    "A_D_behavior_collapse": "A-D 塌缩(不转弯/不刹车)在闭环被语音指令显式注入的离散动作绕过",
+    "A_D_BEV_compliance": "G 的 BEV 对象为空，无法在闭环证明 BEV 贡献"
+  }
+}
