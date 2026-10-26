@@ -1,0 +1,48 @@
+{
+  "status": "PARTIAL",
+  "source": "real_model_inference",
+  "model_identity": {
+    "backend": "DriveTDPAPredictor",
+    "mock": false,
+    "model_path": "/mnt/workspace/drivetdpa_experiments/abcd_full_20260930/checkpoints/A4_vldpo/seed42",
+    "model_file_size": 2121876280,
+    "config_file_size": 3312
+  },
+  "sample_count": 180,
+  "metrics": {
+    "ADE_m": 5.6944918492425085,
+    "FDE_m": 9.817609806371173,
+    "ADE_common": 5.6944918492425085,
+    "FDE_common": 9.817609806371173,
+    "ADE_worstcase": 7.392775619819075,
+    "FDE_worstcase": 9.88955260496921,
+    "worstcase_penalty_m": 10.0,
+    "Goal": 0.9861723418181418,
+    "A_to_T_consistency": 1.0,
+    "R_to_A_consistency": 1.0,
+    "TMC": 1.0,
+    "scene_reference_rate": 0.5111111111111111,
+    "scene_reference_correct_rate": 0.5111111111111111,
+    "parse_success_rate": 0.6055555555555555,
+    "Lat_ms_mean": 13727.796946204682,
+    "Lat_ms_p95": 26713.8694570167,
+    "Unsup": null
+  },
+  "metric_notes": {
+    "Goal": "existing FORWARD reward function applied to predicted final waypoint",
+    "TMC": "provisional proxy equal to A-to-T action/trajectory consistency; R-to-A is only scored when think contains an explicit directional intent",
+    "Unsup": "not computed: no validated ground-truth support ontology for arbitrary generated claims",
+    "scene_reference": "category keyword grounding against annotated BEV object types; pilot heuristic, not human-reviewed",
+    "ADE_common": "mean ADE over samples with successfully parsed six-point trajectory; paired common subset must be reported for fair ablations",
+    "ADE_worstcase": "parse failures receive a fixed 10 m penalty; sensitivity analysis with alternative penalties is recommended"
+  },
+  "limits": [
+    "single OSS blob group",
+    "single scene pilot",
+    "held-out rows from that scene",
+    "not a final paper result"
+  ],
+  "predictions_jsonl": "predictions.jsonl",
+  "input_mode": "no_bev",
+  "seed": null
+}

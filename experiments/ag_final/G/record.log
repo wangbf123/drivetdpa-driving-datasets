@@ -1,0 +1,12 @@
+stdin is not a terminal device. Keyboard handling disabled.1792583566.013424 [97]       ros2: selected interface "lo" is not multicast-capable: disabling multicast
+[INFO] [1792583566.021224004] [rosbag2_recorder]: Press SPACE for pausing/resuming
+[INFO] [1792583566.037037632] [rosbag2_storage]: Opened database '/mnt/workspace/drivetdpa_experiments/runs/G_talk2bev_env_20261021/g_bag/g_bag_0.db3' for READ_WRITE.
+[INFO] [1792583566.041039359] [rosbag2_recorder]: Listening for topics...
+[INFO] [1792583566.041048393] [rosbag2_recorder]: Event publisher thread: Starting
+[INFO] [1792583566.041393963] [rosbag2_recorder]: Recording...
+[INFO] [1792583566.173689161] [rosbag2_recorder]: Subscribed to topic '/drivetdpa/bev_context_json'
+[INFO] [1792583566.287175536] [rosbag2_recorder]: Subscribed to topic '/drivetdpa/scene_context_json'
+[INFO] [1792583566.287223343] [rosbag2_recorder]: All requested topics are subscribed. Stopping discovery...
+[INFO] [1792583800.433275537] [rosbag2_cpp]: Writing remaining messages from cache to the bag. It may take a while
+[INFO] [1792583800.434027612] [rosbag2_recorder]: Event publisher thread: Exiting
+[INFO] [1792583800.434113109] [rosbag2_recorder]: Recording stopped

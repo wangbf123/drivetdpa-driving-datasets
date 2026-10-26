@@ -1,0 +1,313 @@
+{
+  "summary": {
+    "clear_noon": {
+      "success": 5,
+      "total": 5,
+      "rate": 1.0
+    },
+    "rain": {
+      "success": 5,
+      "total": 5,
+      "rate": 1.0
+    },
+    "fog": {
+      "success": 5,
+      "total": 5,
+      "rate": 1.0
+    },
+    "night": {
+      "success": 5,
+      "total": 5,
+      "rate": 1.0
+    },
+    "glare": {
+      "success": 5,
+      "total": 5,
+      "rate": 1.0
+    },
+    "OVERALL": {
+      "success": 25,
+      "total": 25,
+      "rate": 1.0
+    }
+  },
+  "by_command": {
+    "FORWARD": {
+      "success": 5,
+      "total": 5,
+      "rate": 1.0
+    },
+    "LEFT": {
+      "success": 5,
+      "total": 5,
+      "rate": 1.0
+    },
+    "RIGHT": {
+      "success": 5,
+      "total": 5,
+      "rate": 1.0
+    },
+    "SPEED_UP": {
+      "success": 5,
+      "total": 5,
+      "rate": 1.0
+    },
+    "SLOW_DOWN": {
+      "success": 5,
+      "total": 5,
+      "rate": 1.0
+    }
+  },
+  "results": [
+    {
+      "scene": "clear_noon",
+      "command": "FORWARD",
+      "base_v": 5.553701842706904,
+      "v_peak": 5.56876249159858,
+      "v_end": 5.556797833852916,
+      "dyaw_deg": -4.55323791503904,
+      "success": true
+    },
+    {
+      "scene": "clear_noon",
+      "command": "LEFT",
+      "base_v": 2.6423416189879307,
+      "v_peak": 3.9991297581187144,
+      "v_end": 1.6877317819963658,
+      "dyaw_deg": 61.56394767761228,
+      "success": true
+    },
+    {
+      "scene": "clear_noon",
+      "command": "RIGHT",
+      "base_v": 0.0,
+      "v_peak": 2.19631932528426,
+      "v_end": 2.1463107124108913,
+      "dyaw_deg": -34.87129211425781,
+      "success": true
+    },
+    {
+      "scene": "clear_noon",
+      "command": "SPEED_UP",
+      "base_v": 1.1733482313901757,
+      "v_peak": 2.8945065226751843,
+      "v_end": 2.8337591437468572,
+      "dyaw_deg": 1.2722218725854067e-14,
+      "success": true
+    },
+    {
+      "scene": "clear_noon",
+      "command": "SLOW_DOWN",
+      "base_v": 1.695245387377693,
+      "v_peak": 1.695245387377693,
+      "v_end": 0.48944842702611696,
+      "dyaw_deg": -0.01945495605467696,
+      "success": true
+    },
+    {
+      "scene": "rain",
+      "command": "FORWARD",
+      "base_v": 0.0,
+      "v_peak": 2.1934468002158263,
+      "v_end": 2.1412037390785987,
+      "dyaw_deg": -0.011985778808581541,
+      "success": true
+    },
+    {
+      "scene": "rain",
+      "command": "LEFT",
+      "base_v": 0.0,
+      "v_peak": 2.1942979456945237,
+      "v_end": 2.1942979456945237,
+      "dyaw_deg": 36.119735717773416,
+      "success": true
+    },
+    {
+      "scene": "rain",
+      "command": "RIGHT",
+      "base_v": 0.0,
+      "v_peak": 2.193337133592991,
+      "v_end": 2.1429299919615445,
+      "dyaw_deg": -34.17851257324214,
+      "success": true
+    },
+    {
+      "scene": "rain",
+      "command": "SPEED_UP",
+      "base_v": 1.1074063113483958,
+      "v_peak": 2.8921718725391137,
+      "v_end": 2.882669833511058,
+      "dyaw_deg": -1.2722218725854067e-14,
+      "success": true
+    },
+    {
+      "scene": "rain",
+      "command": "SLOW_DOWN",
+      "base_v": 1.619309988101058,
+      "v_peak": 1.6933110072721271,
+      "v_end": 0.4735385088720838,
+      "dyaw_deg": 0.04965972900391823,
+      "success": true
+    },
+    {
+      "scene": "fog",
+      "command": "FORWARD",
+      "base_v": 0.0,
+      "v_peak": 2.199633639397452,
+      "v_end": 2.1472792247510073,
+      "dyaw_deg": -0.012413024902329714,
+      "success": true
+    },
+    {
+      "scene": "fog",
+      "command": "LEFT",
+      "base_v": 0.0,
+      "v_peak": 2.1855388087323417,
+      "v_end": 2.1855388087323417,
+      "dyaw_deg": 35.744758605957024,
+      "success": true
+    },
+    {
+      "scene": "fog",
+      "command": "RIGHT",
+      "base_v": 0.0,
+      "v_peak": 2.1673395110014315,
+      "v_end": 2.117315978658713,
+      "dyaw_deg": -35.31268310546875,
+      "success": true
+    },
+    {
+      "scene": "fog",
+      "command": "SPEED_UP",
+      "base_v": 1.0839634579755797,
+      "v_peak": 2.895418436154942,
+      "v_end": 2.8901539226050446,
+      "dyaw_deg": 1.2722218725854067e-14,
+      "success": true
+    },
+    {
+      "scene": "fog",
+      "command": "SLOW_DOWN",
+      "base_v": 1.6953558881429136,
+      "v_peak": 1.6953558881429136,
+      "v_end": 0.3728226434585009,
+      "dyaw_deg": -0.008468627929707607,
+      "success": true
+    },
+    {
+      "scene": "night",
+      "command": "FORWARD",
+      "base_v": 0.0,
+      "v_peak": 2.205775015931059,
+      "v_end": 2.205775015931059,
+      "dyaw_deg": -0.013000488281239812,
+      "success": true
+    },
+    {
+      "scene": "night",
+      "command": "LEFT",
+      "base_v": 0.0,
+      "v_peak": 2.177459800940558,
+      "v_end": 2.1271327276341405,
+      "dyaw_deg": 36.302265167236335,
+      "success": true
+    },
+    {
+      "scene": "night",
+      "command": "RIGHT",
+      "base_v": 0.0,
+      "v_peak": 2.1750810683137307,
+      "v_end": 2.1750810683137307,
+      "dyaw_deg": -33.86058807373044,
+      "success": true
+    },
+    {
+      "scene": "night",
+      "command": "SPEED_UP",
+      "base_v": 1.2006691725559686,
+      "v_peak": 2.8909545319802445,
+      "v_end": 2.8285397888357378,
+      "dyaw_deg": 0.0,
+      "success": true
+    },
+    {
+      "scene": "night",
+      "command": "SLOW_DOWN",
+      "base_v": 1.692883725636353,
+      "v_peak": 1.692883725636353,
+      "v_end": 0.46964154161857374,
+      "dyaw_deg": 0.006805419921853151,
+      "success": true
+    },
+    {
+      "scene": "glare",
+      "command": "FORWARD",
+      "base_v": 0.0,
+      "v_peak": 2.192659650597285,
+      "v_end": 2.1405333822977446,
+      "dyaw_deg": 0.03166961669920411,
+      "success": true
+    },
+    {
+      "scene": "glare",
+      "command": "LEFT",
+      "base_v": 0.0,
+      "v_peak": 2.2010849026777453,
+      "v_end": 2.1506290775866757,
+      "dyaw_deg": 36.597339630126946,
+      "success": true
+    },
+    {
+      "scene": "glare",
+      "command": "RIGHT",
+      "base_v": 0.0,
+      "v_peak": 2.2175457442255357,
+      "v_end": 2.1666101254544587,
+      "dyaw_deg": -33.976989746093764,
+      "success": true
+    },
+    {
+      "scene": "glare",
+      "command": "SPEED_UP",
+      "base_v": 1.1924838053059046,
+      "v_peak": 2.8911557993541543,
+      "v_end": 2.8259894352273647,
+      "dyaw_deg": 0.0,
+      "success": true
+    },
+    {
+      "scene": "glare",
+      "command": "SLOW_DOWN",
+      "base_v": 1.6165036220340405,
+      "v_peak": 1.6908990856720074,
+      "v_end": 0.46841405559278887,
+      "dyaw_deg": -0.021087646484362923,
+      "success": true
+    }
+  ],
+  "thresholds": {
+    "FORWARD": {
+      "min_v": 0.3,
+      "max_abs_dyaw": 0.2
+    },
+    "LEFT": {
+      "min_dyaw": 0.1
+    },
+    "RIGHT": {
+      "max_dyaw": -0.1
+    },
+    "SPEED_UP": {
+      "min_dv": 0.25
+    },
+    "SLOW_DOWN": {
+      "max_dv": -0.25
+    }
+  },
+  "scenes": {
+    "clear_noon": "晴空正午基线",
+    "rain": "暴雨",
+    "fog": "浓雾",
+    "night": "夜晚",
+    "glare": "日落逆光"
+  }
+}

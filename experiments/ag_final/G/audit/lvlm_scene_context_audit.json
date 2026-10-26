@@ -1,0 +1,33 @@
+{
+  "artifacts": {
+    "bag": "/mnt/workspace/drivetdpa_experiments/runs/G_talk2bev_env_20261021/g_bag",
+    "bag_file_sha256": {
+      "/mnt/workspace/drivetdpa_experiments/runs/G_talk2bev_env_20261021/g_bag/g_bag_0.db3": "417426dd01617ce4cd05922b5a3b5520c3efe75d7a84febffcb055ff233a45ab",
+      "/mnt/workspace/drivetdpa_experiments/runs/G_talk2bev_env_20261021/g_bag/metadata.yaml": "3e7b07da4e135e31180ea2377573727215bc427d1214e3be294158e3dc504e83"
+    },
+    "timeline": "/mnt/workspace/drivetdpa_experiments/runs/G_talk2bev_env_20261021/audit/lvlm_scene_context_timeline.jsonl",
+    "timeline_sha256": "ff19fe651fbd8d1907828b26084425b68febbd22c37d7adf3da3340fec9505c8"
+  },
+  "checks": {
+    "all_messages_valid": true,
+    "image_hashes_recorded": true,
+    "no_errors": true,
+    "real_lvlm_messages_present": true,
+    "scene_hashes_verified": true,
+    "single_identified_model": true
+  },
+  "errors": [],
+  "metrics": {
+    "message_count": 54,
+    "model_paths": [
+      "/mnt/workspace/autonomous_driving/internvl_chat_gpt_oss/work_dirs/smoke_dpo_single_a10_20260620_161511"
+    ],
+    "unique_image_hash_count": 54,
+    "unique_scene_hash_count": 54,
+    "valid_message_count": 54
+  },
+  "official_talk2bev_upstream_entrypoint_status": "BLOCKED_NOT_EXECUTED",
+  "schema_version": "drivetdpa.talk2bev_compatible_lvlm_audit.v1",
+  "scope": "talk2bev_compatible_real_lvlm_ros_fusion",
+  "status": "PASS"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "G_talk2bev_env_20261021",
+  "experiment": "G_talk2bev_quality",
+  "status": "PASS",
+  "status_zh": "通过",
+  "created_at": "2026-10-21T19:52:00+08:00",
+  "mode": "carla_realtime",
+  "pipeline": [
+    "autoware_bev_context_publisher (/drivetdpa/bev_context_json)",
+    "lvlm_scene_context_publisher (/drivetdpa/scene_context_json, port 8000)"
+  ],
+  "scenes_covered": ["clear_noon", "rain", "fog", "night", "glare"],
+  "scene_notes": {
+    "clear_noon": "晴空正午基线",
+    "rain": "暴雨",
+    "fog": "浓雾",
+    "night": "夜晚",
+    "glare": "日落逆光"
+  },
+  "model": {
+    "backend": "DriveTDPAPredictor",
+    "model_path": "/mnt/workspace/autonomous_driving/internvl_chat_gpt_oss/work_dirs/smoke_dpo_single_a10_20260620_161511",
+    "mock": false
+  },
+  "audit": {
+    "status": "PASS",
+    "message_count": 54,
+    "valid_message_count": 54,
+    "unique_image_hash_count": 54,
+    "unique_scene_hash_count": 54,
+    "single_identified_model": true,
+    "all_messages_valid": true,
+    "real_lvlm_messages_present": true,
+    "official_talk2bev_upstream_entrypoint_status": "BLOCKED_NOT_EXECUTED"
+  },
+  "artifacts": {
+    "bag": "g_bag/",
+    "audit": "audit/lvlm_scene_context_audit.json",
+    "timeline": "audit/lvlm_scene_context_timeline.jsonl"
+  }
+}
