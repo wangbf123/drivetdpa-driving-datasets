@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DriveTDPA · 开环与闭环动态流程</title>
+<style>
+:root{color-scheme:light;--ink:#17233e;--muted:#586b85;--accent:#2563eb;--line:#dce4ef;--bg:#f5f7fc;--panel:#fff;--soft:#eff5ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans CJK SC","Microsoft YaHei",sans-serif}
+a{color:#2458c6;text-underline-offset:4px}
+button,select{font:inherit}
+button,a,select{touch-action:manipulation}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,select:focus-visible,[role=button]:focus-visible{outline:3px solid #f59e0b;outline-offset:4px}
+header{max-width:1600px;margin:auto;padding:32px 36px 20px}
+.eyebrow{color:var(--accent);font-size:12px;font-weight:750;letter-spacing:2px}
+.topbar{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.topbar nav{font-size:13px;display:flex;gap:18px}
+h1{font-size:clamp(24px,3vw,36px);letter-spacing:-1px;line-height:1.25;margin:14px 0 12px}
+.intro{color:var(--muted);font-size:14px;line-height:1.8;margin:0;max-width:900px}
+.tabs{display:flex;gap:8px;margin-top:24px;flex-wrap:wrap}
+.tab{padding:11px 20px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-weight:650;color:var(--muted)}
+.tab[aria-pressed=true]{color:white;background:var(--accent);border-color:var(--accent)}
+main{max-width:1600px;margin:auto;padding:0 36px 32px}
+.summary{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;border-radius:12px;background:#eaf0fb;margin-bottom:16px}
+.summary h2{font-size:16px;margin:0 0 6px}
+.summary p{color:var(--muted);font-size:13px;line-height:1.7;margin:0;max-width:780px}
+.facts{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.fact{font-size:12px;font-weight:600;color:#304566;padding:6px 10px;border:1px solid #d3dff1;background:white;border-radius:6px;white-space:nowrap}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:12px 12px 0 0}
+.control{border:1px solid var(--line);background:var(--panel);padding:8px 12px;border-radius:7px;color:var(--ink);font-size:13px}
+.primary{background:var(--accent);color:white;border-color:var(--accent);min-width:94px;font-weight:650}
+.control:disabled{opacity:.4;cursor:default}
+.speed{display:flex;gap:6px;align-items:center;margin-left:6px;font-size:12px;color:var(--muted)}
+select{border:1px solid var(--line);border-radius:5px;background:white;padding:6px;color:var(--ink)}
+.status{margin-left:auto;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 340px;background:var(--panel);border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;overflow:hidden}
+.diagram-wrap{overflow:auto;background-image:radial-gradient(#d8e1ef 1px,transparent 1px);background-size:20px 20px;max-height:820px}
+.diagram{display:block;width:100%;min-width:650px;height:auto;isolation:isolate}
+.diagram text{font-family:inherit;pointer-events:none}
+.node{cursor:pointer;outline:none}
+.node .card{fill:white;stroke:#d4deeb;stroke-width:1.5;transition:fill .2s,stroke .2s}
+.node .num{fill:#eaf0f8}
+.node .numtext{fill:#5a7190;font-size:13px;font-weight:700}
+.node .title{fill:#22314d;font-size:17px;font-weight:700}
+.node .sub{fill:#64758e;font-size:13px}
+.node .phase{fill:#617492;font-size:11px;letter-spacing:1px}
+.node:hover .card{stroke:var(--accent);stroke-width:2}
+.node.done .card{fill:#f0f8f7;stroke:#a9d8cb}
+.node.done .num{fill:#d3eee6}
+.node.active .card{fill:#eef5ff;stroke:var(--accent);stroke-width:2.5;filter:url(#shadow)}
+.node.active .num{fill:var(--accent)}
+.node.active .numtext{fill:white}
+.node.active .title,.node.active .phase{fill:var(--accent)}
+.node:focus-visible .card{stroke:#f59e0b;stroke-width:3}
+.edge{fill:none;stroke:#b9c9df;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)}
+.edge.done{stroke:#6fafa0}
+.edge.active{stroke:var(--accent);stroke-width:3;stroke-dasharray:7 6;animation:flow .8s linear infinite;marker-end:url(#arrowActive)}
+.feedback{stroke:#059669;stroke-width:2;stroke-dasharray:6 5;animation:flow 1.3s linear infinite;fill:none;marker-end:url(#feedbackArrow)}
+.paused .edge.active,.paused .feedback{animation-play-state:paused}
+@keyframes flow{to{stroke-dashoffset:-26}
+}
+aside{padding:22px;border-left:1px solid var(--line);background:#fbfcff;overflow:auto;max-height:820px}
+.step-label{color:var(--accent);font-size:11px;font-weight:750;letter-spacing:1.5px}
+aside h3{font-size:21px;line-height:1.4;margin:8px 0 18px}
+dl{margin:0}
+dt{font-size:11px;font-weight:750;letter-spacing:1px;color:#75849a;margin:18px 0 5px}
+dd{font-size:13px;line-height:1.85;margin:0;color:#354963}
+.note{margin-top:20px;padding:12px;border:1px solid #ead9b5;border-radius:8px;background:#fff9eb;font-size:12px;line-height:1.8;color:#7e5b21}
+.source{display:inline-block;margin-top:18px;font-size:12px}
+.progress{height:3px;background:#e9eef6}
+.progress span{display:block;background:var(--accent);height:100%;transition:width .25s}
+.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:12px 4px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#b9c9df;margin-right:5px}
+.dot.active{background:var(--accent)}
+.dot.done{background:#6fafa0}
+.disclaimer{font-size:12px;line-height:1.9;color:var(--muted);padding:12px 16px;border-left:3px solid #cbd5e1;background:#eef2f8;margin:5px 0 0}
+.bottom-links{display:flex;gap:20px;font-size:12px;margin-top:18px;flex-wrap:wrap}
+.sr-only{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+noscript{display:block;background:#fff2cd;padding:20px}
+@media(min-width:1500px){.workspace{grid-template-columns:minmax(0,1fr) 370px}
+.diagram-wrap,aside{max-height:920px}
+}
+@media(max-width:1000px){header{padding:24px 18px 16px}
+main{padding:0 18px 24px}
+.workspace{grid-template-columns:minmax(0,1fr)}
+aside{border-left:0;border-top:1px solid var(--line);max-height:none}
+.diagram-wrap{max-height:640px}
+.summary{align-items:flex-start;flex-direction:column}
+.facts{justify-content:flex-start}
+.topbar{align-items:flex-start;flex-direction:column}
+.topbar nav{font-size:12px}
+.status{margin-left:0}
+.speed{margin-left:0}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body class="paused">
+<header>
+ <div class="topbar"><span class="eyebrow">DRIVETDPA / EXPERIMENT FLOW</span><nav aria-label="文档导航"><a href="../README.md">项目首页</a><a href="../experiments/ag_final/README.md">A–G 数据</a> <a href="../FINAL_RESULTS.md">A–G Final</a><a href="experiment_flows_zh.md">详细图解与来源</a></nav></div>
+ <h1>从离线预测，到车辆执行的反馈闭环。</h1>
+ <p class="intro">选择一条链路，播放或逐步浏览。点击任意节点，查看它的输入、处理、输出和证据边界。所有内容来自仓库脚本与最终报告，本页为流程演示。</p>
+ <div class="tabs" role="group" aria-label="选择实验流程"><button class="tab" data-mode="open-loop" aria-pressed="true">A–D 开环实验</button><button class="tab" data-mode="closed-loop" aria-pressed="false">E / F 闭环执行</button><button class="tab" data-mode="scene-audit" aria-pressed="false">G 场景理解审计</button></div>
+</header>
+<main>
+ <section class="summary" aria-labelledby="mode-label"><div><h2 id="mode-label"></h2><p id="mode-summary"></p></div><div id="facts" class="facts"></div></section>
+ <div class="toolbar" aria-label="播放控制">
+  <button id="play" class="control primary" aria-label="播放流程">▶ 播放</button><button id="prev" class="control" aria-label="上一步">← 上一步</button><button id="next" class="control" aria-label="下一步">下一步 →</button><button id="reset" class="control">↺ 重置</button>
+  <label class="speed">播放速度<select id="speed"><option value="5000">慢速 · 5 秒</option><option value="3000" selected>标准 · 3 秒</option><option value="1500">快速 · 1.5 秒</option></select></label>
+  <label class="speed">缩放<select id="zoom"><option value="1" selected>默认视图</option><option value="1.25">125%</option><option value="1.5">150%</option></select></label>
+  <span class="status" id="status" aria-live="polite"></span>
+ </div>
+ <div class="progress" aria-hidden="true"><span id="progress"></span></div>
+ <div class="workspace"><div class="diagram-wrap" id="viewport"><svg class="diagram" id="diagram" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="可点击的实验流程图"></svg></div><aside aria-label="当前节点详细说明"><div class="step-label" id="detail-phase"></div><h3 id="detail-title"></h3><dl><dt>输入 INPUT</dt><dd id="detail-input"></dd><dt>处理 PROCESS</dt><dd id="detail-process"></dd><dt>输出 OUTPUT</dt><dd id="detail-output"></dd></dl><p class="note" id="detail-note"></p><a class="source" id="detail-source">查看本节点依据 ↗</a></aside></div>
+ <div class="legend"><span><i class="dot active"></i>正在讲解</span><span><i class="dot done"></i>已讲解</span><span><i class="dot"></i>待讲解</span><span>虚线回边：控制状态反馈 / 后续 trial</span></div>
+ <p class="disclaimer" id="mode-note"></p>
+ <div class="bottom-links"><a id="report">查看对应 Final 主报告 ↗</a><a href="experiment_flows_zh.md">查看完整分支、Mermaid 与闭环时序 ↗</a><a href="project_guide_zh.md">项目目录与时间线 ↗</a></div>
+ <noscript>交互播放需要浏览器启用 JavaScript。也可阅读 <a href="experiment_flows_zh.md">详细中文图解</a>，或查看 <a href="assets/open_loop_flow.svg">开环 SVG</a> 与 <a href="assets/closed_loop_flow.svg">闭环 SVG</a>。</noscript>
+</main>
+<script>
+'use strict';
+const FLOWS={"open-loop":{"name":"A–D 开环实验","label":"离线数据 → 训练消融 → 轨迹评估","color":"#2563eb","facts":["2523 训练样本 · 841 场景","180 held-out · 9 场景","20 次评估 · 3600 条预测"],"summary":"开环预测与固定真值比较，输出不送入 CARLA，车辆状态不会被模型输出改变。","report":"../reports/abcd_final/ANALYSIS_REPORT.md","nodes":[{"title":"NuScenes 数据输入","subtitle":"图像 · 场景元数据 · 标注","phase":"数据准备","source":"../scripts/experiments/abcd_full/stage_data.py","inputs":"CAM_FRONT 图像、scene/sample、ego_pose 与标注。","process":"为样本关联场景、当前观测与监督信息。","outputs":"图像引用、问题、场景上下文和标签来源。","note":"完整图像在外部数据存储，本页面不会加载真实图像。"},{"title":"构建上下文与监督标签","subtitle":"输入上下文与未来 GT 分开","phase":"数据准备","source":"../scripts/experiments/abcd_full/stage_data.py","inputs":"当前帧场景标注、未来 ego pose。","process":"由标注构建场景上下文；未来 6×0.5 秒位姿转换为自车坐标系轨迹，启发式生成动作标签。","outputs":"当前观测上下文；独立的 GT 轨迹与动作监督。","note":"未来轨迹只参与训练监督和评估对比，不进入 held-out 模型推理输入。"},{"title":"按场景隔离切分","subtitle":"训练场景与评估场景无重叠","phase":"数据准备","source":"../experiments/runs/drivetdpa_abcd_nuscenes_20260930/heldout/split_manifest.json","inputs":"带 scene 标识的样本及 day/night/rain 条件。","process":"按场景而非随机帧切分；held-out 每类 3 场景、每场景 20 条。","outputs":"训练 2523 条 / 841 场景；held-out 180 条 / 9 场景。","note":"这里展示最终实际规模，而非脚本默认 TRAIN_LIMIT=3000 的上限。"},{"title":"生成 SFT / 偏好数据","subtitle":"A2 / A3 / A4 surrogate","phase":"训练数据","source":"../scripts/experiments/abcd_full/stage_data.py","inputs":"训练切分、动作及轨迹监督。","process":"生成 train_sft，以及物理不平滑、动作不一致、弱场景证据等 locally constructed rejected。","outputs":"SFT JSONL、三种偏好 JSONL、meta 与 split manifest。","note":"偏好对为 surrogate，不是官方 reward rollout 或闭环新采集偏好。"},{"title":"A1 · SFT 基线训练","subtitle":"3 seed × 200 步","phase":"模型训练","source":"../scripts/experiments/abcd_full/train_one.sh","inputs":"InternVL 3.5-1B 与 SFT 数据。","process":"分别使用 seed 42 / 17 / 23；每次训练 200 步，学习率 1e-5。","outputs":"3 个 A1 基线 checkpoint。","note":"视觉 backbone 冻结，模型训练在外部主项目运行。"},{"title":"A2 / A3 / A4 偏好分支","subtitle":"各自从同 seed A1 开始","phase":"模型训练","source":"../scripts/experiments/abcd_full/run_abcd_full.sh","inputs":"每个 seed 的 A1 checkpoint、对应偏好数据。","process":"A2 Physics、A3 JPO、A4 VL-DPO 各独立继续 200 步，学习率 1e-6。","outputs":"9 个偏好 checkpoint；含 A1 合计 12 个。","note":"A2→A3→A4 不是串行继承关系；三者均从同 seed 的 A1 初始化。"},{"title":"A 类 · 12 次评估任务","subtitle":"4 配置 × 3 seed","phase":"消融配置","source":"../scripts/experiments/abcd_full/run_abcd_full.sh","inputs":"A1–A4 共 12 个 checkpoint。","process":"每个 checkpoint 在统一的 held-out 输入上做 full 协议评估。","outputs":"12 组 A 类评估任务。","note":"本节点与下一节点是两类评估任务的说明，播放先后不表示 B/C/D 要训练 8 个新模型。"},{"title":"B / C / D · 8 次任务","subtitle":"共用 A4 seed42 参考模型","phase":"消融配置","source":"../scripts/experiments/abcd_full/run_abcd_full.sh","inputs":"A4 seed42 checkpoint、同一 held-out。","process":"B1–B4 调整文本/语音转写代理/BEV；C1–C2 调整 R→T / RAT；D1–D2 去/加上下文。","outputs":"8 组协议消融；与 A 类合计 20 次评估。","note":"B 的语音是转写 proxy，无真实音频编码器。"},{"title":"Greedy 推理 · 生成输出","subtitle":"20 × 180 = 3600 条预测","phase":"开环推理","source":"../scripts/experiments/abcd_full/run_abcd_full.sh","inputs":"当前图像、问题与按协议选择的场景上下文。","process":"启动真实 predictor，检查 health，greedy 解码生成 RAT；R→T 配置按其协议输出。","outputs":"raw_text、think、动作和轨迹。","note":"推理不使用 GT 未来轨迹；输出不执行为车辆控制。"},{"title":"解析与成功 / 失败分流","subtitle":"6 点轨迹 · 格式有效性","phase":"评估解析","source":"../reports/abcd_final/ANALYSIS_REPORT.md","inputs":"模型原文、协议格式与独立 GT。","process":"记录解析是否成功；成功轨迹参与几何误差比较，失败保留记录与 parse 统计。","outputs":"可解析轨迹、失败标记及对齐后的样本。","note":"不可静默丢弃解析失败；报告区分 common 集和 worst-case 失败惩罚口径。"},{"title":"指标计算与分组","subtitle":"ADE / FDE · parse · 一致性","phase":"结果评估","source":"../reports/abcd_final/ANALYSIS_REPORT.md","inputs":"预测、独立 GT、配置 / seed / 场景标识。","process":"计算轨迹误差、Goal、A→T 一致性、场景引用和延迟，按配置与条件汇总。","outputs":"20 份 metrics JSON 与 20 份 predictions JSONL。","note":"ADE/FDE 度量固定真值上的轨迹误差；它们不是闭环指令执行成功率。"},{"title":"自动汇总 · 初步统计","subtitle":"aggregate_results.py","phase":"自动汇总","source":"../scripts/experiments/abcd_full/aggregate_results.py","inputs":"20 组评估结果与对齐样本。","process":"汇总 mean±std、置信区间、条件分解与逐样本 Wilcoxon，生成数据表。","outputs":"results_summary.json 与 ABCD_DATA_ANALYSIS.md。","note":"自动脚本的逐样本检验没有解决场景聚类问题；最终结论还需下一阶段复核。"},{"title":"Final 场景感知复核","subtitle":"9 场景配对 · cluster bootstrap","phase":"最终复核","source":"../reports/abcd_final/ANALYSIS_REPORT.md","inputs":"自动汇总、逐样本结果、scene 标识。","process":"最终分析按 9 个场景配对并做 cluster bootstrap，修正逐样本检验的反保守解释。","outputs":"最终统计解释、误差归因与主张边界。","note":"此步骤来自 final 分析，不是宣称 aggregate 脚本已自动完成同样复核。"},{"title":"文件审计与小型发布包","subtitle":"SHA256 · 来源 · 发布范围","phase":"数据发布","source":"../experiments/ag_final/README.md","inputs":"指标、预测、held-out、manifest。","process":"逐配置指标和预测按 A–D 分组发布至 ag_final；原运行包保留 held-out、manifest 与逐文件 SHA256。","outputs":"experiments/ag_final/A–D/，以及 experiments/runs/drivetdpa_abcd_nuscenes_20260930/。","note":"完整图像、checkpoint 与训练集正文未全部随仓库发布。"},{"title":"最终报告与结论","subtitle":"数据记录 09-30 · 报告 10-13","phase":"最终成果","source":"../reports/abcd_final/README.md","inputs":"实验发布包与最终复核。","process":"合并行为塌缩、纵向误差、动作层与 BEV 作用，并注明统计和数据范围。","outputs":"ANALYSIS_REPORT.md、analysis_findings.json 与数据导航。","note":"本动画仅演示阅读顺序与数据关系，不会启动训练或显示实时任务状态。"}]},"closed-loop":{"name":"E / F 闭环执行","label":"指令 → 动作 → 轨迹 → 控制 → 状态反馈","color":"#059669","facts":["E：5 指令 × 10 trial","F：5 场景 × 5 指令","按 CARLA 仿真时间判定"],"summary":"E/F 验证显式指令的执行链。车辆的新状态反馈到控制与观测；单次 trial 判定后再进入后续试验。","report":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","nodes":[{"title":"配置 E / F 实验矩阵","subtitle":"指令 · 天气 · trial","phase":"实验准备","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"CARLA、ROS2、Autoware E2E 与真实模型服务。","process":"E：5 类指令各 10 次；F：clear_noon / rain / fog / night / glare 各 5 条指令。","outputs":"E 50 次、F 25 次执行任务。","note":"该链路按现有 final 报告描述，完整控制源码和运行服务不在此仓库。"},{"title":"记录试验起点与仿真时钟","subtitle":"base_v · 初始 yaw · sim_now","phase":"试验初始化","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"车辆起始状态、CARLA /clock。","process":"用仿真时间定义判定窗口；记录 base_v 和初始 yaw 以计算后续变化。","outputs":"单次 trial 的基线和时间窗。","note":"图中不假定每次 trial 都已完全停稳；F 的 clear_noon 存在状态残留。"},{"title":"输入固定词汇指令","subtitle":"FORWARD / LEFT / RIGHT","phase":"动作来源","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"语音 / 轨迹指令。","process":"选择 FORWARD、LEFT、RIGHT、SPEED_UP、SLOW_DOWN 之一。","outputs":"本次任务的明确意图。","note":"无语音 vs 文本闭环对照，不应据此推断语音模态优于文本。"},{"title":"规则映射为离散动作","subtitle":"意图显式给定","phase":"动作来源","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"固定指令与规则解析。","process":"将指令映射为离散动作，例如 LEFT → LEFT。","outputs":"可交给下游轨迹展开的动作约束。","note":"动作来自规则指令，不是模型从环境自主推理出转向/停车意图。"},{"title":"真实 InternVL · A→T","subtitle":"DriveTDPAPredictor","phase":"模型推理","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"显式离散动作、模型输入与真实 checkpoint。","process":"将动作展开为可执行几何轨迹，而非自行决定该做什么。","outputs":"RAT 中的动作/轨迹表达与相应模型输出。","note":"E/F 的成功不会推翻 A–D 中模型自由轨迹回归的行为塌缩。"},{"title":"RAT → YAML 航点","subtitle":"推理 · 动作 · 轨迹接口","phase":"轨迹接口","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"模型 RAT 与连续轨迹。","process":"将轨迹表达转成 YAML 航点，交给下游接口。","outputs":"控制侧可接入的轨迹记录。","note":"这里依报告解释接口，不将未入库转换源码伪装成仓库内可运行模块。"},{"title":"ROS 2 轨迹与状态传递","subtitle":"轨迹接口 · 时间戳 · 车辆状态","phase":"ROS2 传输","source":"../docs/ros_topics.md","inputs":"轨迹、车辆状态、仿真时间与坐标关联。","process":"通过 ROS2 与 Autoware 接口传送轨迹及状态；具体 topic 以实际采集 manifest 为准。","outputs":"控制节点可用的目标与反馈输入。","note":"文档 topic 清单是接口约定，不能替代本次原始 bag 的实际 topic 审计。"},{"title":"trajectory_follower","subtitle":"MPC 横向 + PID 纵向","phase":"Autoware 控制","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"目标轨迹与车辆运动状态。","process":"根据轨迹误差和车辆反馈计算跟踪控制。","outputs":"横向与纵向控制请求。","note":"该节点在执行期间持续使用反馈；流程播放只把它展开一次用于讲解。"},{"title":"挡位与命令源选择","subtitle":"shift_decider → selector","phase":"Autoware 控制","source":"../reports/efg_final/README.md","inputs":"跟踪控制输出与车辆状态。","process":"shift_decider、external_cmd_selector 按报告描述进入后续 E2E 命令链。","outputs":"带挡位 / 来源选择的控制请求。","note":"这些名称来自最终报告描述；此页面不监控实际 ROS 节点状态。"},{"title":"命令门控与执行器转换","subtitle":"gate → raw converter","phase":"Autoware 控制","source":"../reports/efg_final/README.md","inputs":"待执行的控制请求。","process":"vehicle_cmd_gate → raw_vehicle_cmd_converter，将命令送往执行器接口。","outputs":"转向 / 油门 / 制动等执行请求。","note":"门控存在不等于当前实验已验证所有交通安全情形。"},{"title":"CARLA 车辆执行","subtitle":"动作改变仿真车辆状态","phase":"仿真执行","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"执行器控制与当前车辆动力学。","process":"CARLA 推进仿真，产生新的速度、位置和偏航。","outputs":"下一仿真时刻车辆状态及相机观测。","note":"这一步使闭环与开环不同：输出实际影响后续状态。"},{"title":"状态反馈与持续跟踪","subtitle":"速度 / yaw → ROS2 / 控制","phase":"闭环反馈","source":"../docs/architecture.md","inputs":"执行后的车辆状态、仿真时钟。","process":"将新状态提供给 ROS2 与跟踪控制，形成持续控制反馈；新相机观测也可供 G 支路审计。","outputs":"持续更新的观测、跟踪误差、v_peak、v_end、dyaw。","note":"反馈不等于模型在线再训练；G 审计也不证明其输出驱动了 E/F 决策。"},{"title":"5 仿真秒窗口内判定","subtitle":"按离散指令应用阈值","phase":"试验判定","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"基线、仿真时间、速度与偏航变化。","process":"FORWARD min_v≥0.3m/s 且 |dyaw|≤0.2rad；LEFT≥0.1rad，RIGHT≤−0.1rad；加/减速 Δv≥0.25 / ≤−0.25m/s。","outputs":"本次 trial 成功 / 失败记录及动作幅度。","note":"判据衡量是否执行指令，不衡量该动作在交通场景中是否合理。"},{"title":"记录结果 → 后续 trial","subtitle":"失败也记录 · 无虚构重试","phase":"实验记录","source":"../experiments/ag_final/E/experiment_e_results.csv","inputs":"本次执行结果、指令与天气 / 光照条件。","process":"按实验矩阵继续后续指令/场景；所有结果汇总，不画成失败自动重试直到成功。","outputs":"ag_final/E、F 中逐次 CSV 与按指令 / 场景汇总的 JSON。","note":"F 晴空基线残留必须保留并说明，不能用动画暗示 trial 之间完全独立重置。"},{"title":"E / F 最终汇总与报告","subtitle":"50/50 · 25/25 · 有限判据","phase":"最终成果","source":"../experiments/ag_final/README.md","inputs":"ag_final/E 的 50 行 CSV、ag_final/F 的 25 行 CSV 及各组 summary JSON。","process":"汇总成功率、转向/速度幅度、环境分解和限制。","outputs":"已发布逐次 CSV、summary JSON，以及数据表和最终分析报告。","note":"E/F 逐次结果已入库；G 也发布了时间线、审计和运行日志。完整图像、权重及完整 rosbag 仍在外部，本页不重放遥测。"}]},"scene-audit":{"name":"G 场景理解审计","label":"实时相机 → 真实 LVLM → 场景消息 → 审计","color":"#7c3aed","facts":["54 条有效消息","54 个唯一图像 / 场景 hash","官方上游入口未执行"],"summary":"G 是独立的相机理解与消息审计支路。其输出不在图中连到 E/F 动作选择，避免误认为完成了自主决策闭环。","report":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","nodes":[{"title":"CARLA 实时场景","subtitle":"5 天气 / 光照条件","phase":"场景输入","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"CARLA 场景与相机。","process":"在环境中获取实时观察；与 E/F 同属实验系统，但 G 独立评价消息。","outputs":"实时场景图像来源。","note":""},{"title":"CAM_FRONT 相机图像","subtitle":"保留图像与场景关联","phase":"相机观测","source":"../experiments/ag_final/G/audit/lvlm_scene_context_timeline.jsonl","inputs":"前视单目图像及上下文关联。","process":"采集图像，为审计保留身份/hash 关联信息。","outputs":"54 个唯一图像 hash 的观察。","note":"54 条时间线记录已发布；记录含描述与 hash，不包含完整图像。E2E 模式 BEV objects 仍为空。"},{"title":"真实模型身份","subtitle":"mock=false · checkpoint","phase":"模型身份","source":"../experiments/ag_final/G/audit/lvlm_scene_context_audit.json","inputs":"DriveTDPAPredictor 与真实模型 checkpoint。","process":"保留 backend、模型路径、文件大小等身份信息。","outputs":"可审计的真实模型标识。","note":"模型文件约 2.12 GB；身份审计不等于实体真值准确率。"},{"title":"LVLM 场景理解","subtitle":"Talk2BEV-compatible","phase":"模型推理","source":"../reports/efg_final/EFG_ANALYSIS_REPORT.md","inputs":"实时 CAM_FRONT 与可用上下文。","process":"真实 InternVL 生成场景描述与兼容格式的理解输出。","outputs":"场景消息与模型输出。","note":"官方 Talk2BEV upstream entrypoint 未执行；兼容输出不等于官方完整流水线。"},{"title":"关联场景消息","subtitle":"图像 hash · 场景 hash","phase":"消息记录","source":"../experiments/ag_final/G/audit/lvlm_scene_context_timeline.jsonl","inputs":"理解输出、相机及场景关联。","process":"记录消息有效性、图像/场景唯一标识与模型身份。","outputs":"已发布的 54 条逐消息时间线，含场景描述、图像 / 场景 hash 与模型身份。","note":""},{"title":"消息与身份审计","subtitle":"有效性 · 唯一性 · 错误数","phase":"质量审计","source":"../experiments/ag_final/G/audit/lvlm_scene_context_audit.json","inputs":"场景消息和审计标识。","process":"检查有效消息、唯一图像/场景 hash、single_identified_model、mock 与错误数。","outputs":"54/54 有效，54 唯一图像/场景 hash，0 错误。","note":"消息审计通过不是完整实体 precision/recall 或幻觉率的真值评测。"},{"title":"审计结果汇总","subtitle":"PASS · 54 / 54","phase":"审计输出","source":"../experiments/ag_final/G/summary.json","inputs":"消息审计结果。","process":"汇总到 experiment_G.audit，并保留未执行的上游状态。","outputs":"结构化 G 审计统计。","note":""},{"title":"边界随数据保留","subtitle":"BEV 为空 · upstream BLOCKED","phase":"证据边界","source":"../experiments/ag_final/G/","inputs":"真实模型身份、审计结论与缺失证据。","process":"保留 BEV objects 为空、官方上游未执行的边界；时间线、审计与运行日志已入库，bag 仅有 metadata.yaml。","outputs":"已发布的 G 审计材料及仍需外部准备的完整图像、权重与 rosbag 数据。","note":"这里没有 G→E/F 决策反馈箭头，也没有未验证的 preference selector。"},{"title":"汇入 E–G Final","subtitle":"理解审计与执行指标分开","phase":"最终成果","source":"../reports/efg_final/README.md","inputs":"G 审计统计与分析。","process":"在最终报告中与 E/F 执行结果并列解释，分别定义指标和边界。","outputs":"E–G 最终报告、数据表和汇总 JSON；ag_final/G 提供逐消息审计与运行日志。","note":"本页是流程演示，不接入 ROS2、CARLA 或实验服务器。"}]}};
+let mode='open-loop', step=0, timer=null;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function stop(){clearTimeout(timer);timer=null;document.body.classList.add('paused');$('play').textContent='▶ 播放';$('play').setAttribute('aria-label','播放流程');}
+function tick(){if(step>=FLOWS[mode].nodes.length-1){stop();update();return;}selectStep(step+1,false);timer=setTimeout(tick,Number($('speed').value));}
+function play(){if(timer!==null){stop();return;}if(step===FLOWS[mode].nodes.length-1)selectStep(0,false);document.body.classList.remove('paused');$('play').textContent='Ⅱ 暂停';$('play').setAttribute('aria-label','暂停流程');timer=setTimeout(tick,Number($('speed').value));}
+function position(index){const row=Math.floor(index/3),col=row%2?2-index%3:index%3;return {x:64+col*346,y:64+row*152};}
+function edgePath(from,to){const a=position(from),b=position(to);if(a.y===b.y){return a.x<b.x?`M ${a.x+292} ${a.y+55} H ${b.x-10}`:`M ${a.x} ${a.y+55} H ${b.x+302}`;}return `M ${a.x+146} ${a.y+110} V ${b.y-10}`;}
+function applyZoom(){$('diagram').style.width=`${Math.max(650,$('viewport').clientWidth)*Number($('zoom').value)}px`;}
+function render(){
+ const f=FLOWS[mode];document.documentElement.style.setProperty('--accent',f.color);
+ $('mode-label').textContent=f.label;$('mode-summary').textContent=f.summary;$('facts').innerHTML=f.facts.map(t=>`<span class="fact">${esc(t)}</span>`).join('');
+ document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===mode)));
+ const rows=Math.ceil(f.nodes.length/3),height=rows*152+80;
+ $('diagram').setAttribute('viewBox',`0 0 1120 ${height}`);
+ const defs=`<defs><filter id="shadow" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="${f.color}" flood-opacity=".12"/></filter><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7" fill="#b9c9df"/></marker><marker id="arrowActive" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7" fill="${f.color}"/></marker><marker id="feedbackArrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7" fill="#059669"/></marker></defs>`;
+ let paths=f.nodes.slice(1).map((_,i)=>`<path data-edge="${i}" class="edge" d="${edgePath(i,i+1)}"/>`).join('');
+ if(mode==='closed-loop'){
+  // New state returns to tracking control; the trial decision is a separate window-level operation.
+  const a=position(11),b=position(7),c=position(13),d=position(1);
+  paths+=`<path class="feedback" d="M ${a.x} ${a.y+72} H 24 V ${b.y+42} H ${b.x-8}"/><text x="28" y="${a.y+101}" fill="#047857" font-size="12">状态 → 跟踪控制</text><path class="feedback" d="M ${c.x+292} ${c.y+78} H 1095 V 24 H ${d.x+146} V ${d.y-8}"/><text x="1090" y="46" text-anchor="end" fill="#047857" font-size="12">后续 trial</text>`;
+ }
+ $('diagram').innerHTML=defs+paths+f.nodes.map((n,i)=>{const p=position(i);return `<g class="node" data-step="${i}" transform="translate(${p.x},${p.y})" role="button" tabindex="0" aria-label="第 ${i+1} 步：${esc(n.title)}"><title>${esc(n.title+'：'+n.process)}</title><rect class="card" width="292" height="110" rx="12"/><circle class="num" cx="25" cy="27" r="13"/><text class="numtext" x="25" y="32" text-anchor="middle">${i+1}</text><text class="phase" x="48" y="31">${esc(n.phase)}</text><text class="title" x="17" y="62">${esc(n.title)}</text><text class="sub" x="17" y="87">${esc(n.subtitle)}</text></g>`;}).join('');
+ $('diagram').querySelectorAll('[data-step]').forEach(n=>{const choose=()=>selectStep(Number(n.dataset.step));n.addEventListener('click',choose);n.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}});});
+ $('report').href=f.report;
+ $('mode-note').textContent=mode==='open-loop'?'阅读提示：SFT 与偏好训练存在同 seed 分支；A 类与 B/C/D 是两类评估任务。动画按讲解顺序展开，精确分支见详细图解。GT 未来轨迹只用于监督与评估，不送入 held-out 推理。':mode==='closed-loop'?'闭环提示：绿色回边表示新车辆状态回到跟踪控制；外侧回边表示按矩阵继续后续 trial，不表示失败自动重试。G 请切换到独立审计支路查看。':'审计提示：G 不与 E/F 动作选择建立已验证的因果连接。BEV objects 为空，官方 Talk2BEV 上游入口未执行；54/54 是消息审计口径。';
+ update();applyZoom();
+}
+function update(){const f=FLOWS[mode],n=f.nodes[step];
+ $('diagram').querySelectorAll('[data-step]').forEach(el=>{const i=Number(el.dataset.step);el.classList.toggle('active',i===step);el.classList.toggle('done',i<step);if(i===step)el.setAttribute('aria-current','step');else el.removeAttribute('aria-current');});
+ $('diagram').querySelectorAll('[data-edge]').forEach(el=>{const i=Number(el.dataset.edge);el.classList.toggle('active',i===step);el.classList.toggle('done',i<step);});
+ $('detail-phase').textContent=`${String(step+1).padStart(2,'0')} / ${String(f.nodes.length).padStart(2,'0')} · ${n.phase}`;
+ $('detail-title').textContent=n.title;$('detail-input').textContent=n.inputs;$('detail-process').textContent=n.process;$('detail-output').textContent=n.outputs;$('detail-note').textContent=n.note||'本节点根据已发布报告与数据说明绘制；演示不代表实时运行状态。';$('detail-source').href=n.source;
+ $('status').textContent=`${step+1} / ${f.nodes.length} 步 · ${timer!==null?'播放中':'已暂停'}`;$('progress').style.width=`${(step+1)/f.nodes.length*100}%`;$('prev').disabled=step===0;$('next').disabled=step===f.nodes.length-1;
+}
+function selectStep(index,pause=true){if(pause)stop();step=Math.max(0,Math.min(index,FLOWS[mode].nodes.length-1));update();
+ const box=$('diagram').querySelector('[aria-current="step"]').getBoundingClientRect(),vp=$('viewport'),view=vp.getBoundingClientRect();
+ const dy=box.top<view.top?box.top-view.top-20:box.bottom>view.bottom?box.bottom-view.bottom+20:0;
+ const dx=box.left<view.left?box.left-view.left-20:box.right>view.right?box.right-view.right+20:0;
+ if(dx||dy)vp.scrollBy({top:dy,left:dx,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}
+function changeMode(next,hash=true){if(!Object.hasOwn(FLOWS,next))next='open-loop';stop();mode=next;step=0;$('viewport').scrollTop=0;render();if(hash)history.replaceState(null,'',`#${mode}`);}
+$('play').addEventListener('click',()=>{play();update();});$('prev').addEventListener('click',()=>selectStep(step-1));$('next').addEventListener('click',()=>selectStep(step+1));$('reset').addEventListener('click',()=>selectStep(0));$('speed').addEventListener('change',()=>{if(timer!==null){stop();play();update();}});$('zoom').addEventListener('change',applyZoom);window.addEventListener('resize',applyZoom);document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>changeMode(b.dataset.mode)));window.addEventListener('hashchange',()=>changeMode(location.hash.slice(1),false));document.addEventListener('visibilitychange',()=>{if(document.hidden){stop();update();}});
+changeMode(location.hash.slice(1),false);
+</script>
+</body>
+</html>

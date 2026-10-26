@@ -1,5 +1,13 @@
 # A–D 开环实验分析报告（NuScenes 全量，最终版）
 
+[项目首页](../../README.md) · [A–G 最终成果](../../FINAL_RESULTS.md) · [报告总目录](../README.md) · [中文目录与时间线](../../docs/project_guide_zh.md)
+
+> **最终版 · 优先阅读**｜数据发布包标识：`20260930`；报告独立整理及最后深化：**2026-10-13**（Git 记录，北京时间）。数据日期与报告更新时间分别标注。
+
+**阅读顺序：[最终报告](ANALYSIS_REPORT.md) → [数据表](ABCD_DATA_ANALYSIS.md) → [汇总 JSON](results_summary.json) → [逐配置原始发布包](../../experiments/runs/drivetdpa_abcd_nuscenes_20260930/)。**
+
+[动态看懂开环训练与评估](../../docs/experiment_flows_zh.md#open-training) · [交互版逐步播放](../../docs/experiment_flows.html#open-loop)
+
 这是 `drivetdpa_abcd_nuscenes_20260930` 的**权威、论文级分析报告**，覆盖 A1–A4（偏好消融）、B1–B4（模态消融）、C1–C2（动作层消融）、D1–D2（Talk2BEV 消融）。相较 2026-09-30 早期版本（`reports/abcd_按实验指导_20260930/`），本版经过**深度数据挖掘 + 三次自我修正 + 结构深化**，是可支撑论文结论的定稿。
 
 ## 文件
@@ -9,7 +17,7 @@
 | [`ANALYSIS_REPORT.md`](./ANALYSIS_REPORT.md) | **主报告**（中文，14 节 + 4 附录）：实验依据与目的、指标中文说明、行为塌缩三层证据、ADE 误差归因、机制、A/B/C/D 逐组深挖（实验问题/训练 loss/数据对比/机制/对论文价值）、条件、局限、可支撑主张、论文结构建议、优选配置、后续建议 |
 | [`analysis_findings.json`](./analysis_findings.json) | 机器可读结论（20 个字段）：动作构成、塌缩、位移、误差归因、think 复述、场景感知检验、独立验证、**训练 loss、延迟、消融增量** |
 | [`results_summary.json`](./results_summary.json) | 12 配置汇总统计（mean±std / 95% t 区间 / 条件分解 / 配对检验） |
-| [`ABCD_DATA_ANALYSIS.md`](./ABCD_DATA_ANALYSIS.md) | pipeline 自动生成的原始汇总报告 |
+| [`ABCD_DATA_ANALYSIS.md`](./ABCD_DATA_ANALYSIS.md) | pipeline 自动生成的数据表与汇总；逐样本检验的解释以主报告的场景感知修正为准 |
 
 ## 核心结论（六条强支撑主张）
 
@@ -29,3 +37,13 @@
 3. **统计修正（最重要）**：逐样本 Wilcoxon 曾报 A2/A4 "显著更差"，但**反保守**（忽略场景聚类）；场景感知复测（n=9 场景配对 + cluster bootstrap）显示 **A1–A4 无差异**。论文须用场景感知统计。
 
 原始 run 数据见 [`experiments/runs/drivetdpa_abcd_nuscenes_20260930/`](../../experiments/runs/drivetdpa_abcd_nuscenes_20260930/)。
+
+## 版本与数据边界
+
+- 最终版使用全量 scene-disjoint 切分：2523 个训练样本 / 841 个训练场景；180 个 held-out 样本 / 9 个场景。
+- [2026-09-24 pilot](../abcd_20260924/README.md)与[2026-09-30 按指导整理版](../abcd_按实验指导_20260930/README.md)均基于早期 20 样本评估，保留作历史追溯。
+- 原始发布包包含指标、预测、held-out 数据及 SHA256；完整模型权重与训练原始大文件不随仓库发布。
+
+---
+
+[返回 A–G 最终成果](../../FINAL_RESULTS.md) · [继续看 E/F/G 最终版](../efg_final/README.md)

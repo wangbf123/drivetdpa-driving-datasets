@@ -1,5 +1,15 @@
 # E–G 闭环实验分析报告（CARLA 实时，最终版）
 
+[项目首页](../../README.md) · [A–G 最终成果](../../FINAL_RESULTS.md) · [报告总目录](../README.md) · [中文目录与时间线](../../docs/project_guide_zh.md)
+
+> **最终版 · 优先阅读**｜报告发布：**2026-10-25**（Git 记录，北京时间）。这不是三组实验统一的执行日期；[G 的运行汇总](../../experiments/ag_final/G/summary.json)记录 `2026-10-21T19:52:00+08:00`，E/F 的精确运行日期需结合原始来源核对。
+
+**阅读顺序：[最终报告](EFG_ANALYSIS_REPORT.md) → [数据表](EFG_DATA_ANALYSIS.md) → [汇总 JSON](results_summary.json) → [结论 JSON](analysis_findings.json)。**
+
+**逐次数据：[E 指令执行 CSV](../../experiments/ag_final/E/experiment_e_results.csv) · [F 环境执行 CSV](../../experiments/ag_final/F/experiment_f_results.csv) · [G 场景消息时间线](../../experiments/ag_final/G/audit/lvlm_scene_context_timeline.jsonl) · [A–G 数据总目录](../../experiments/ag_final/README.md)。**
+
+[动态看懂闭环执行与反馈](../../docs/experiment_flows_zh.md#closed-execution) · [单次 trial 时序](../../docs/experiment_flows_zh.md#closed-sequence) · [交互版逐步播放](../../docs/experiment_flows.html#closed-loop)
+
 这是 DriveTDPA **闭环实验 E / F / G** 的权威、论文级分析报告，覆盖：
 
 - **E** 语音指令闭环（5 类指令 × 10 trial，CARLA 实时）
@@ -34,7 +44,26 @@
 
 E/F/G 证明的是**"闭环系统端到端可执行、执行幅度可重复、对天气稳健、真实模型能理解场景"**；它们**不证明**任何单组件的消融贡献（无对照组），也**不证明**模型的轨迹规划质量（判据是离散动作执行、非轨迹精度）。100% 成功率含"判据宽松"的贡献，必须与 A–D 的"行为塌缩"结论**合并**陈述，才能给出诚实、完整的论文叙事。
 
-原始 run 数据见：
+## 原始数据位置与发布边界
+
+本目录保存**分析报告、数据表与汇总 JSON**，逐次结果已发布至 [`experiments/ag_final/`](../../experiments/ag_final/README.md)：
+
+| 实验 | 已发布的逐次数据与审计材料 |
+| --- | --- |
+| E | [50 行执行结果 CSV](../../experiments/ag_final/E/experiment_e_results.csv) · [汇总 JSON](../../experiments/ag_final/E/experiment_e_summary.json) |
+| F | [25 行执行结果 CSV](../../experiments/ag_final/F/experiment_f_results.csv) · [汇总 JSON](../../experiments/ag_final/F/experiment_f_summary.json) |
+| G | [54 条场景消息时间线](../../experiments/ag_final/G/audit/lvlm_scene_context_timeline.jsonl) · [模型与消息审计](../../experiments/ag_final/G/audit/lvlm_scene_context_audit.json) · [运行汇总](../../experiments/ag_final/G/summary.json) · [录制日志](../../experiments/ag_final/G/record.log) · [天气日志](../../experiments/ag_final/G/weather.log) |
+
+G 的 [`g_bag/`](../../experiments/ag_final/G/g_bag/) 当前仅有 `metadata.yaml`，其引用的 `g_bag_0.db3` 未入库。完整 rosbag、相机图像与模型权重仍在外部保存，不能仅凭 metadata 重放 bag。
+
+以下服务器路径用于追溯原始来源，不是当前云环境目录或公开下载入口：
+
 - E：`/mnt/workspace/autonomous_driving/results/experiment_e/`
 - F：`/mnt/workspace/drivetdpa_experiments/runs/F_env_run2/`
 - G：`/mnt/workspace/drivetdpa_experiments/runs/G_talk2bev_env_20261021/`
+
+完整实验时间线见[中文目录与时间线](../../docs/project_guide_zh.md)。
+
+---
+
+[返回 A–G 最终成果](../../FINAL_RESULTS.md) · [继续看 A–D 最终版](../abcd_final/README.md)

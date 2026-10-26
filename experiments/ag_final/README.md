@@ -1,5 +1,7 @@
 # A–G 实验最终数据
 
+[项目首页](../../README.md) · [最终数据与报告总入口](../../FINAL_RESULTS.md) · [开环 / 闭环动态图解](../../docs/experiment_flows_zh.md)
+
 本目录按「实验 A–G」**一个实验一个目录**，汇总全实验矩阵的最终结果数据：
 
 - **A–D**：NuScenes 开环消融（最终版 `abcd_full_20260930`，全量 scene-disjoint，180 held-out，A 组 3 seeds）。

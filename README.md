@@ -1,163 +1,162 @@
-# DriveTDPA 数据集与实验仓库
+<div align="center">
 
-> DriveTDPA 项目的数据门户：**CARLA 自动驾驶数据规范与采集** + **NuScenes A–D 开环消融实验** + **CARLA E/F/G 闭环实验**的完整数据、分析与报告。
+# DriveTDPA · 数据与实验
 
-![NuScenes A-D](https://img.shields.io/badge/experiment-NuScenes%20A%E2%80%93D-blue)
-![Closed-loop E/F/G](https://img.shields.io/badge/experiment-CARLA%20E%2FF%2FG-green)
-![CARLA](https://img.shields.io/badge/source-CARLA-orange)
-![InternVL](https://img.shields.io/badge/model-InternVL%203.5--1B-blueviolet)
-![status](https://img.shields.io/badge/status-pre--release-yellow)
+**A–G 最终实验成果 · 中文报告 · 可追溯数据**
 
-## 目录
+从 NuScenes 开环消融，到 CARLA 闭环执行与场景理解。
 
-- [最新：CARLA 闭环实验 E/F/G](#carla-闭环实验-efg)
-- [NuScenes A–D 开环消融实验](#nuscenes-a-d-开环消融实验)
-- [CARLA 数据集门户](#carla-数据集门户)
-- [仓库目录](#仓库目录)
-- [快速校验](#快速校验)
-- [数据怎么存](#数据怎么存)
-- [数据真实性规则](#数据真实性规则)
-- [详细文档](#详细文档)
+![A–D 开环实验](https://img.shields.io/badge/A–D-NuScenes_开环-2563eb)
+![E–G 闭环与场景理解](https://img.shields.io/badge/E–G-CARLA_闭环与场景理解-059669)
+![报告状态](https://img.shields.io/badge/报告-Final-7c3aed)
+
+**[A–G FINAL 总入口](FINAL_RESULTS.md)** · **[开环 / 闭环动态图解](docs/experiment_flows_zh.md)** · **[中文目录与时间线](docs/project_guide_zh.md)** · **[全部文档](docs/README.md)**
+
+</div>
 
 ---
 
-## CARLA 闭环实验 E/F/G
+## ⭐ A–G 最终成果
 
-**这是 DriveTDPA 全实验矩阵中唯一端到端跑通的闭环证据**（语音→真实 InternVL→RAT→YAML→ROS2→Autoware E2E→CARLA），与 NuScenes A–D 开环消融构成「开环组件价值 + 闭环系统可用」的完整证据链。
+首次阅读请从这里开始。**数据看左列，结论看右列**；历史版本在下方单独索引。
 
-**一句话结论**：闭环系统端到端可执行、执行幅度高度可重复且转向对称（LEFT `+37.63±0.47°` / RIGHT `−36.91±0.56°`）、对雨/雾/夜/逆光稳健、真实 InternVL 能正确理解场景（E 50/50、F 25/25、G 54/54 全部 PASS）。**但** 100% 成功是「系统集成 + 显式动作映射」的产物，不是「轨迹回归质量」的证明——它不与 A–D 的「行为塌缩」矛盾，而是把「意图来源可靠→忠实执行」与「意图来源不可靠→暴露塌缩」清晰分开。
+| 实验 | 最终实验数据 / Final | 最终实验报告 / Final |
+| --- | --- | --- |
+| **A–D · NuScenes 开环消融**<br>偏好优化、输入模态、动作层、Talk2BEV | **[按 A–D 分组的最终数据](experiments/ag_final/README.md)**<br>20 份指标 + 20 份预测 · [held-out 与 SHA256 原包](experiments/runs/drivetdpa_abcd_nuscenes_20260930/)<br>[汇总 JSON](reports/abcd_final/results_summary.json) · [数据分析表](reports/abcd_final/ABCD_DATA_ANALYSIS.md) | **[A–D 最终分析报告](reports/abcd_final/ANALYSIS_REPORT.md)**<br>[报告目录](reports/abcd_final/README.md) · [结构化结论](reports/abcd_final/analysis_findings.json)<br>报告更新：**2026-10-13** |
+| **E–G · CARLA 闭环与场景理解**<br>语音指令、环境鲁棒性、Talk2BEV 理解 | **[E / F / G 最终数据](experiments/ag_final/README.md)**<br>E：50 条 CSV · F：25 条 CSV · G：54 条审计时间线<br>[汇总 JSON](reports/efg_final/results_summary.json) · [数据分析表](reports/efg_final/EFG_DATA_ANALYSIS.md) · [原始材料位置说明](FINAL_RESULTS.md#source-data) | **[E–G 最终分析报告](reports/efg_final/EFG_ANALYSIS_REPORT.md)**<br>[报告目录](reports/efg_final/README.md) · [结构化结论](reports/efg_final/analysis_findings.json)<br>报告发布：**2026-10-25** |
 
-| 入口 | 说明 |
-|---|---|
-| [📄 主报告](reports/efg_final/EFG_ANALYSIS_REPORT.md) | 论文级分析（执行可重复性、环境稳健性、Talk2BEV 场景理解、跨组联动机制） |
-| [📊 机器可读结论](reports/efg_final/analysis_findings.json) | 结构化结论 C1–C6，可直接引用 |
-| [📦 数据报告](reports/efg_final/EFG_DATA_ANALYSIS.md) | per-command / per-scene 数据表与边界说明 |
+> **数据范围**：[`experiments/ag_final/`](experiments/ag_final/README.md) 按 A–G 分组展示最终数据：A–D 指标与预测、E/F 逐次 CSV、G 审计时间线与日志均已入库；完整图像、模型权重和 bag 数据仍需外部准备。原 A–D 发布包保留供 SHA256 校验，详见 [FINAL 总入口](FINAL_RESULTS.md)。
 
-**六条主张**：① 全链路可执行（75/75 trials + 54/54 消息）；② 执行幅度可重复且转向对称；③ 执行层对天气稳健；④ 真实 InternVL 产出 Talk2BEV 兼容场景理解；⑤ 闭环 100% 是显式动作映射的产物（机制）；⑥ E/F 无对照/判据宽松/词汇量小 → 不能支撑组件级消融结论。
+### 先了解这三点
 
----
+- **A–D 看轨迹精度与组件作用**：最终报告记录了转向/刹车行为塌缩；场景感知统计下，A1–A4 无显著精度差异。
+- **E–G 看闭环执行与场景理解**：报告记录 E 50/50、F 25/25 执行通过，G 54/54 消息审计通过；结果受测试范围与判据约束。
+- **两组结果需要合并阅读**：E/F 的显式动作映射支持指令执行，不能据此认定 A–D 中的轨迹回归问题已经解决。
 
-## NuScenes A–D 开环消融实验
+## 🔄 开环与闭环 · 动态流程图
 
-对照实验指导在 NuScenes 上完成 A/B/C/D 四组开环消融（`drivetdpa_abcd_nuscenes_20260930`）。
+**[详细流程图与闭环时序 →](docs/experiment_flows_zh.md)** · **[交互播放版 HTML →](docs/experiment_flows.html)**
 
-**一句话结论**：模型学会了 RAT 协议的**格式**与"前进"意图，但发生**行为类别塌缩**——整类丢弃转向、几乎从不刹车；**主导误差是纵向（不会停车）**；surrogate 偏好优化（A2/A3/A4）相对 SFT **无精度增益**（场景感知统计下 A1–A4 不可区分）。
+两条链路分别展示数据准备、模型处理、输出评价与车辆反馈。SVG 的虚线箭头可流动；交互版支持 **播放 / 暂停、上一步 / 下一步、节点详情、速度和缩放**。GitHub 展示 HTML 源码时，下载该单文件后用浏览器打开，无需安装依赖。动画演示流程，不连接实时实验服务。
 
-| 入口 | 说明 |
-|---|---|
-| [📄 主报告](reports/abcd_final/ANALYSIS_REPORT.md) | 论文级分析（行为塌缩三层证据、误差归因、场景感知统计、三次修正） |
-| [📊 机器可读结论](reports/abcd_final/analysis_findings.json) | 17 个结构化字段，可直接引用 |
-| [📦 原始 run 数据](experiments/runs/drivetdpa_abcd_nuscenes_20260930/) | 20 份 metrics + predictions + held-out 集 + SHA256 |
-| [📖 中文说明](docs/nuscenes_abcd_experiment_zh.md) | 面向中文读者的完整解读 |
-| [🔧 复现脚本](scripts/experiments/abcd_full/) | 数据切分 → 训练 → 评估 → 报告，可断点续跑 |
+<details open>
+<summary><strong>展开开环 A–D：数据 → 场景切分 → 训练消融 → 预测 → 真值对比 → 最终报告</strong></summary>
 
-**六条强支撑主张**：① A1–A4 无显著差异；② 整类丢弃转向 + 从不刹车（与场景无关）；③ 误差主因是刹车；④ BEV 是输出合规必要输入；⑤ Action 层独立贡献 +22%；⑥ think 是复述而非推理。
+![A–D 开环动态流程图](docs/assets/open_loop_flow.svg)
 
----
+[查看训练分支](docs/experiment_flows_zh.md#open-training) · [查看推理、失败分流与最终统计](docs/experiment_flows_zh.md#open-evaluation)
 
-## CARLA 数据集门户
+</details>
 
-本仓库同时是 CARLA 自动驾驶实验的数据门户：将仿真传感器、Autoware 状态、动态 BEV、Talk2BEV 场景描述、DriveTDPA 轨迹预测、偏好选择、控制指令和下一帧反馈串联成可追踪、可验证、可复现的场景记录。
+<details open>
+<summary><strong>展开闭环 E/F：指令 → 动作 → 轨迹 → Autoware → CARLA → 状态反馈；附 G 审计支路</strong></summary>
 
-> 当前状态：**数据规范、格式示例和自动实验预发布数据**。`examples/` 仅用于说明格式；`experiments/runs/` 保存已经过真实模型、真实 judge、loader 和 SHA256 校验的小型 CARLA recorded-seed 实验包。它们不是完整实时闭环数据集，也不能视为 Ground Truth。
+![E/F 闭环执行与 G 场景理解动态流程图](docs/assets/closed_loop_flow.svg)
 
-### 项目完整链路
+[查看控制反馈与判据](docs/experiment_flows_zh.md#closed-execution) · [查看单次 trial 时序](docs/experiment_flows_zh.md#closed-sequence) · [查看 G 场景理解审计](docs/experiment_flows_zh.md#scene-audit)
+
+</details>
+
+## 🧭 怎么阅读这个项目
+
+| 你的目的 | 推荐入口 | 下一步 |
+| --- | --- | --- |
+| **快速看最终成果** | [A–G FINAL 总入口](FINAL_RESULTS.md) | 选择实验组 → 数据表 → 主报告 |
+| **看懂开环与闭环链路** | [动态流程图与详细图解](docs/experiment_flows_zh.md) | 训练 / 推理分支 → 控制反馈 → 时序与节点说明 |
+| **看懂每个目录** | [中文目录与时间线](docs/project_guide_zh.md) | 按目录用途或版本日期查找 |
+| **写论文 / 引用结论** | [A–D 报告](reports/abcd_final/ANALYSIS_REPORT.md) / [E–G 报告](reports/efg_final/EFG_ANALYSIS_REPORT.md) | 同时核对统计方法、结论边界和对应数据 |
+| **核对实验配置与字段** | [A–G 实验矩阵](docs/experiment_matrix_zh.md) | [实验数据字典](docs/EXPERIMENT_DATA_DICTIONARY_ZH.md) |
+| **检查或复用数据** | [实验数据目录](experiments/README.md) | [快速校验](#validation) |
+| **准备采集 / 复现** | [自动实验运行手册](docs/automated_experiment_guide_zh.md) | [A–D 复现脚本说明](scripts/experiments/abcd_full/README.md) |
+
+## 🗂️ 项目目录 · 中文速览
+
+以下按推荐阅读顺序排列；GitHub 的文件列表仍按名称排序。
 
 ```text
-CARLA 相机 / LiDAR / GNSS / IMU / 车辆状态
-  -> CARLA ROS Bridge
-  -> Autoware 定位 / 感知 / 地图 / 路由
-  -> 动态 BEV
-  -> Talk2BEV 场景事实和文字描述
-  -> DriveTDPA 推理 / 动作 / 3 秒轨迹
-  -> preference selector 选择安全候选轨迹
-  -> Autoware 规划与控制
-  -> CARLA 车辆执行
-  -> 下一帧 CARLA 状态与闭环指标
+drivetdpa-driving-datasets/
+├── README.md                 项目首页：优先展示 A–G 最终成果
+├── FINAL_RESULTS.md          A–G 最终数据、报告与来源的统一入口
+├── reports/                  分析报告与统计汇总
+│   ├── efg_final/            E–G 最终报告与数据汇总（2026-10-25 发布）
+│   ├── abcd_final/           A–D 最终报告与数据汇总（2026-10-13 更新）
+│   ├── abcd_按实验指导_20260930/  历史整理版，使用 09-24 pilot 数据
+│   └── abcd_20260924/        历史单场景 pilot 报告
+├── experiments/              实验发布数据、索引与历史阻塞记录
+│   ├── ag_final/             A–G 分组最终数据（指标、预测、CSV、审计）
+│   ├── runs/                 A–D 两个原始发布包 + CARLA 历史偏好实验包
+│   └── blocked_runs/         2026-09-15 的阻塞记录
+├── docs/                     中文导览、实验说明、数据字典与采集规范
+├── scripts/                  数据校验、下载、导入与 A–D 复现脚本
+├── examples/                 CARLA 格式示例（用于理解字段）
+├── schemas/                  场景、预测、偏好对等 JSON Schema
+├── manifests/                大文件清单示例与索引约定
+├── datasets/                 正式数据集规划与发布位置说明
+└── CONTRIBUTING.md           数据贡献与真实性要求
 ```
 
-本仓库正式数据均使用 `source: "carla"`。偏好对来自**同一个 CARLA 场景、同一帧输入**的多次 DriveTDPA rollout，不会将无关输入或伪造数据混合成偏好样本。
+完整说明见 **[项目目录中文指南](docs/project_guide_zh.md)**。
 
-### 每一帧包含什么
+## 🕒 版本顺序 · 最新在前
 
-| 链路阶段 | 数据示例 | 常见文件格式 |
+日期区分实验记录与报告发布，不使用本机文件修改时间判断版本。
+
+| 日期 | 阶段 | 阅读入口 |
 | --- | --- | --- |
-| CARLA 传感器 | 前视 RGB、LiDAR、车辆位姿和速度 | JPG/PNG、PCD/BIN、JSON |
-| ROS Bridge | 带时间戳的 ROS 2 Topic 和 TF | rosbag2 DB3/MCAP |
-| Autoware | 定位、目标、路由、规划轨迹和控制指令 | ROS 2 消息、JSON 导出 |
-| 动态 BEV | 自车、目标、占用栅格、车道关系和风险 | JSON、PNG |
-| Talk2BEV | 结构化场景事实和自然语言描述 | JSON/JSONL |
-| DriveTDPA | 推理、3 步动作、6 点轨迹和延迟 | JSON/JSONL |
-| 偏好选择器 | 候选轨迹、评分、chosen/rejected | JSON/JSONL |
-| 闭环结果 | `t` 时刻控制与 `t+1` 时刻车辆反馈 | JSON/JSONL |
+| **2026-10-26** | **A–G 最终数据按组归档**：补齐 E/F CSV 与 G 审计时间线 | [A–G 分组数据](experiments/ag_final/README.md) |
+| **2026-10-25** | **E–G 最终报告发布**：闭环执行、环境鲁棒性与场景理解 | [E–G Final](reports/efg_final/README.md) |
+| **2026-10-13** | **A–D 全量数据发布与最终报告更新**：数据记录日期为 09-30 | [A–D Final](reports/abcd_final/README.md) |
+| 2026-09-30 | A–D 全量实验包记录；同时整理了基于旧 pilot 的按指导版报告 | [全量数据](experiments/runs/drivetdpa_abcd_nuscenes_20260930/) · [历史整理版](reports/abcd_按实验指导_20260930/README.md) |
+| 2026-09-24 | A–D 单场景 pilot：450 训练样本、20 held-out 样本 | [历史报告](reports/abcd_20260924/README.md) |
+| 2026-09-15 及之前 | A–G 阻塞记录、CARLA recorded-seed 偏好实验积累 | [历史说明](docs/project_guide_zh.md#timeline) |
 
-字段说明见[数据字典](docs/data_dictionary.md)，完整关联示例见[场景示例](examples/scene_000001/manifest.json)。
+**[查看详细时间线与版本对应关系 →](docs/project_guide_zh.md#timeline)**
 
-### 计划发布的数据集
+<a id="validation"></a>
 
-| 数据集版本 | 内容 | 状态 |
-| --- | --- | --- |
-| `dataset-carla-v0.1` | CARLA、Autoware、BEV、Talk2BEV 和 DriveTDPA 多模态帧 | 计划中 |
-| `dataset-carla-preference-v0.1` | CARLA 场景候选轨迹组和偏好对 | 计划中 |
-| `dataset-carla-closed-loop-v0.1` | 控制指令到下一帧反馈的闭环片段和指标 | 计划中 |
-| `dataset-carla-preference-experiment-v0.1` | 已录制 CARLA 种子上的真实模型多采样和偏好选择 | 自动持续采集中 |
+## ✅ 快速校验
 
-“计划中”表示已经预留数据规范和发布位置，不表示完整数据已经采集或通过验证。
-
-## 仓库目录
-
-```text
-docs/                  架构、采集协议、字段说明、中文说明和 ROS Topic
-datasets/              正式数据集发布位置和存储约定
-manifests/             场景及大文件的机器可读索引
-schemas/               用于自动校验的 JSON Schema
-examples/              小型 CARLA 格式示例场景
-reports/               实验汇总、指标和图表（含 NuScenes A–D 与 CARLA E/F/G 分析报告）
-experiments/           自动实验 run、机器可读索引和逐文件校验和
-scripts/               数据校验、校验和、下载与 A–D 复现脚本
-```
-
-## 快速校验
-
-工具只依赖 Python 3.9+ 标准库：
+离线工具只依赖 **Python 3.9+ 标准库**。在仓库根目录执行：
 
 ```bash
+# CARLA 格式示例及关联记录
 python scripts/validate_dataset.py examples/scene_000001/manifest.json
-python scripts/generate_checksums.py examples/scene_000001
-python scripts/validate_experiment.py experiments/runs
+
+# 历史 CARLA 偏好实验包
+python scripts/validate_experiment.py experiments/runs/carla_pref_*
+
+# A–D 最终发布包的文件完整性
+(cd experiments/runs/drivetdpa_abcd_nuscenes_20260930 && sha256sum --check SHA256SUMS)
 ```
 
-自动采集、持续运行、停止和导入命令见
-[《DriveTDPA 自动实验运行手册》](docs/automated_experiment_guide_zh.md)，实验文件说明见
-[`experiments/README.md`](experiments/README.md)。
+当前验证器仅适用于 CARLA run；直接传入整个 `experiments/runs` 会因 NuScenes 清单格式不同而报错。更多校验说明见 [实验数据目录](experiments/README.md)。文件校验通过表示发布文件完整，重新训练和仿真仍需外部主项目、图像、权重及运行环境。
 
-正式清单填写真实 HTTPS 下载地址后，可按场景下载并自动验证 SHA256：
+<details>
+<summary><strong>CARLA 数据集规划与真实性约定</strong></summary>
 
-```bash
-python scripts/download_dataset.py manifests/dataset-carla-v0.1.example.jsonl \
-  --scene scene_000001 --output data
-```
+### 数据集规划
 
-示例清单仍是占位符，下载工具会主动拒绝，避免误认为已经发布正式数据。
+仓库还维护 CARLA 传感器 → ROS Bridge → Autoware → BEV → Talk2BEV → DriveTDPA → 控制反馈的数据规范。
 
-## 数据怎么存
+| 发布位置 | 内容 | 当前范围 |
+| --- | --- | --- |
+| [datasets/carla/](datasets/carla/README.md) | 传感器、Autoware、BEV、Talk2BEV 与模型预测 | 完整数据集计划中 |
+| [datasets/preference/](datasets/preference/README.md) | 同帧多候选轨迹与偏好对 | 完整数据集计划中；小型历史实验包已在 `experiments/runs/` |
+| [datasets/closed_loop/](datasets/closed_loop/README.md) | 控制指令与下一帧反馈 | 完整数据集计划中；E–G 汇总见 Final 入口 |
 
-GitHub 保存文档、Schema、小型示例、manifest、校验和、图表和报告。完整相机序列、点云、rosbag2、地图、视频和模型权重应存入阿里云 OSS 或公开数据集平台。每个正式文件必须在 manifest 中记录文件大小和 SHA256。具体规则见[存储与发布规范](docs/storage_and_release.md)。
+`examples/` 是格式示例；`manifests/*.example.jsonl` 含下载占位符，下载工具会拒绝这些占位地址。CARLA 偏好历史包使用 recorded-seed，不代表实时车辆闭环重跑。
 
-## 数据真实性规则
+### 存储与来源
 
-- CARLA 仿真器状态、碰撞信号和配置好的路线可以作为 Ground Truth，但必须保留来源和配置。
-- 模型生成的场景描述、推理、动作和轨迹都是预测结果，不能标为 Ground Truth。
-- 偏好判断模型不能看到 reward、rank、未来真值或 chosen/rejected 标签。
-- 非有限数值、发生碰撞或越界的轨迹不能被 preference selector 选中。
-- 所有数据使用稳定的 `dataset_version`、`scene_id`、`frame_id` 和 CARLA 时间戳进行关联。
+Git 保存文档、Schema、小型示例、实验发布包、清单与报告；完整图像、点云、rosbag、视频和模型权重放在对象存储或实验服务器。正式文件需记录大小和 SHA256，见 [存储与发布规范](docs/storage_and_release.md)。
 
-## 详细文档
+- CARLA 仿真器状态可作为真值，但需保留来源和配置；模型预测、推理和场景描述应标明其预测性质。
+- 偏好对来自同一 CARLA 场景、同一帧的候选；judge 不应接触 reward、rank 或未来真值等泄漏字段。
+- 非有限数值、碰撞或越界轨迹应被安全门控排除；记录需用版本、场景、帧和时间戳关联。
+- NuScenes A–D 与 CARLA 数据使用各自的来源和清单格式，查看时需区分。
 
-- [系统架构](docs/architecture.md)
-- [CARLA 数据采集流程](docs/data_collection.md)
-- [数据字典](docs/data_dictionary.md)
-- [ROS 2 Topic 清单](docs/ros_topics.md)
-- [存储与发布规范](docs/storage_and_release.md)
-- [NuScenes A–D 实验中文说明](docs/nuscenes_abcd_experiment_zh.md)
-- [数据贡献说明](CONTRIBUTING.md)
+</details>
+
+---
+
+**[A–G FINAL](FINAL_RESULTS.md)** · [报告索引](reports/README.md) · [实验数据索引](experiments/README.md) · [中文文档](docs/README.md) · [贡献说明](CONTRIBUTING.md)

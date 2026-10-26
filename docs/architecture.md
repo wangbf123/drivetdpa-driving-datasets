@@ -1,5 +1,9 @@
 # 系统架构
 
+[开环 / 闭环详细动态流程图](experiment_flows_zh.md) · [交互播放版](experiment_flows.html) · [返回文档导航](README.md)
+
+本文说明 CARLA 数据规范的目标架构；A–D 开环、E/F 执行闭环与 G 场景理解的实测路径及差异见[实验链路图解](experiment_flows_zh.md)。
+
 数据以 CARLA 场景和带时间戳的帧为核心组织。一个场景代表一次可复现实验，包含 CARLA Town、路线、天气、交通随机种子、传感器配置、Autoware 配置和模型版本。
 
 ## 数据标识与同步

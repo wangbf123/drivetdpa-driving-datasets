@@ -1,5 +1,7 @@
 # 最新实验报告
 
+[返回项目首页](../README.md) · [A–G FINAL 数据与报告](../FINAL_RESULTS.md) · [报告版本索引](README.md) · [中文目录与时间线](../docs/project_guide_zh.md)
+
 > 更新时间：2026-10-25（CARLA 闭环 E/F/G + NuScenes 开环 A–D，最终版）
 
 ## CARLA 闭环实验 E / F / G（`drivetdpa_experiments/runs/*` + `autonomous_driving/results/experiment_e/`）
